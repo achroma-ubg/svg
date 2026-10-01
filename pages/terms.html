@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){if(window['__achromaApiShim'])return;window['__achromaApiShim']=!![];var a='https://bikesense.org';window['__ACHROMA_WISP__']='wss://bikesense.org/wisp/';var b=/^\/(api|cloud|cloud-covers|games\/v1)(\/|\?|$)/;function c(o){if(typeof o!=='string'&&!(o instanceof URL))return o;var p=String(o);if(p['indexOf'](location['origin']+'/')===0x0)p=p['slice'](location['origin']['length']);return b['test'](p)?a+p:o;}var d=[['X-Achroma-Session','achroma-portable-session'],['X-Achroma-Uid','achroma-portable-uid']];function e(o){try{return localStorage['getItem'](o);}catch(p){return null;}}function f(o,p){try{if(p)localStorage['setItem'](o,p);else localStorage['removeItem'](o);}catch(q){}}function g(o){o('X-Achroma-Portable','1');d['forEach'](function(p){var q=e(p[0x1]);if(q)o(p[0x0],q);});}function h(o){d['forEach'](function(p){var q=o(p[0x0]);if(q!==null&&q!==undefined)f(p[0x1],q);});}var i=window['fetch'];window['fetch']=function(o,p){var q=o instanceof Request?o['url']:o;var r=c(q);if(r===q)return i['call'](this,o,p);var s=new Headers(p&&p['headers']||(o instanceof Request?o['headers']:undefined));g(function(w,x){s['set'](w,x);});var t=Object['assign']({},p,{'credentials':'omit','headers':s});var u=o instanceof Request?new Request(r,o):r;return i['call'](this,u,t)['then'](function(v){h(function(w){return v['headers']['get'](w);});return v;});};var j=XMLHttpRequest['prototype']['open'];XMLHttpRequest['prototype']['open']=function(o,p){var q=c(p);var r=Array['prototype']['slice']['call'](arguments);if(q===p)return j['apply'](this,r);r[0x1]=q;var s=j['apply'](this,r);var t=this;g(function(u,w){t['setRequestHeader'](u,w);});t['addEventListener']('readystatechange',function(){if(t['readyState']===0x2)h(function(u){return t['getResponseHeader'](u);});});return s;};if(navigator['sendBeacon']){var k=navigator['sendBeacon']['bind'](navigator);navigator['sendBeacon']=function(o,p){return k(c(o),p);};}if(window['EventSource']){var l=window['EventSource'];window['EventSource']=function(o,p){return new l(c(o),p);};window['EventSource']['prototype']=l['prototype'];}[HTMLImageElement,HTMLIFrameElement,HTMLMediaElement,HTMLSourceElement]['forEach'](function(o){var p=Object['getOwnPropertyDescriptor'](o['prototype'],'src');if(!p||!p['set'])return;Object['defineProperty'](o['prototype'],'src',{'configurable':!![],'enumerable':p['enumerable'],'get':p['get'],'set':function(q){p['set']['call'](this,c(q));}});});var m=Element['prototype']['setAttribute'];Element['prototype']['setAttribute']=function(o,p){if(String(o)['toLowerCase']()==='src')p=c(p);return m['call'](this,o,p);};function n(o){if(o['nodeType']!==0x1)return;var p=o['matches']('[src]')?[o]:[];p['push']['apply'](p,o['querySelectorAll']('[src]'));p['forEach'](function(q){var r=q['getAttribute']('src');var s=c(r);if(s!==r)m['call'](q,'src',s);});}new MutationObserver(function(o){o['forEach'](function(p){p['addedNodes']['forEach'](n);});})['observe'](document['documentElement'],{'childList':!![],'subtree':!![]});}());</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" crossorigin href="../assets/legal-DPDhHNgK.css">
+</head>
+<body>
+  <main class="legal-page">
+    <article class="legal-card">
+      <h1>Terms of Service</h1>
+      <p class="legal-updated">Last updated September 27, 2026</p>
+
+      <p>These Terms of Service ("Terms") govern your use of achroma, including its website and all of its features (the "Service"). By using the Service, you agree to these Terms. If you do not agree, do not use the Service.</p>
+
+      <h2>1. The Service</h2>
+      <p>achroma is a free, non-commercial service. Features may be added, changed or removed at any time, and the Service may be unavailable from time to time. Some features depend on third-party websites and providers that we do not control.</p>
+
+      <h2>2. Acceptable use</h2>
+      <p>You agree to use the Service only in compliance with all laws, regulations and policies that apply to you. You agree not to:</p>
+      <ul>
+        <li>use the Service for any unlawful, harmful, fraudulent or abusive purpose;</li>
+        <li>harass, threaten or impersonate others, or post content that is illegal, hateful or infringes anyone's rights;</li>
+        <li>upload or distribute malware, spam or other harmful material;</li>
+        <li>interfere with, overload, probe or attempt to gain unauthorized access to the Service or any other system;</li>
+        <li>circumvent the Service's own limits, bans or security measures.</li>
+      </ul>
+      <p>We may restrict, suspend or terminate access to the Service or any account, at any time and for any reason, without notice.</p>
+
+      <h2>3. Accounts and content you submit</h2>
+      <p>You are responsible for keeping your account credentials secure and for all activity under your account. You are solely responsible for content you post in Chat, enter into the AI feature, or otherwise submit. We may remove any content at our discretion.</p>
+
+      <h2>4. Third-party content and services</h2>
+      <p>The Service provides access to websites, games, media, AI-generated responses and other content provided by third parties. We do not own, control, endorse or verify that content, and we are not responsible for it, for its availability, or for your dealings with any third party. AI-generated responses may be inaccurate and should not be relied on. Links generated by the Service may stop working or expire.</p>
+
+      <h2>5. Disclaimer of warranties</h2>
+      <p class="legal-caps">The Service is provided "as is" and "as available", without warranties of any kind, whether express or implied, including any warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, availability or security. You use the Service at your own risk.</p>
+
+      <h2>6. Limitation of liability</h2>
+      <p class="legal-caps">To the fullest extent permitted by law, achroma and its operators and contributors will not be liable for any direct, indirect, incidental, special, consequential or punitive damages, or for any loss of data, access, reputation or opportunity, arising out of or related to your use of, or inability to use, the Service or any third-party content accessed through it, even if advised of the possibility of such damages.</p>
+
+      <h2>7. Indemnity</h2>
+      <p>You agree to indemnify and hold harmless achroma and its operators and contributors from any claims, losses or expenses arising from your use of the Service or your violation of these Terms.</p>
+
+      <h2>8. Changes</h2>
+      <p>We may update these Terms at any time. The date at the top shows when they were last changed. Continuing to use the Service after a change means you accept the updated Terms.</p>
+
+      <h2>9. Contact</h2>
+      <p>Questions about these Terms can be sent to <a href="mailto:me@achromaon.top">me@achromaon.top</a>.</p>
+
+      <p class="legal-links"><a href="privacy.html">Privacy Policy</a></p>
+    </article>
+  </main>
+</body>
+</html>

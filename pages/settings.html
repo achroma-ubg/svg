@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){if(window['__achromaApiShim'])return;window['__achromaApiShim']=!![];var a='https://bikesense.org';window['__ACHROMA_WISP__']='wss://bikesense.org/wisp/';var b=/^\/(api|cloud|cloud-covers|games\/v1)(\/|\?|$)/;function c(o){if(typeof o!=='string'&&!(o instanceof URL))return o;var p=String(o);if(p['indexOf'](location['origin']+'/')===0x0)p=p['slice'](location['origin']['length']);return b['test'](p)?a+p:o;}var d=[['X-Achroma-Session','achroma-portable-session'],['X-Achroma-Uid','achroma-portable-uid']];function e(o){try{return localStorage['getItem'](o);}catch(p){return null;}}function f(o,p){try{if(p)localStorage['setItem'](o,p);else localStorage['removeItem'](o);}catch(q){}}function g(o){o('X-Achroma-Portable','1');d['forEach'](function(p){var q=e(p[0x1]);if(q)o(p[0x0],q);});}function h(o){d['forEach'](function(p){var q=o(p[0x0]);if(q!==null&&q!==undefined)f(p[0x1],q);});}var i=window['fetch'];window['fetch']=function(o,p){var q=o instanceof Request?o['url']:o;var r=c(q);if(r===q)return i['call'](this,o,p);var s=new Headers(p&&p['headers']||(o instanceof Request?o['headers']:undefined));g(function(w,x){s['set'](w,x);});var t=Object['assign']({},p,{'credentials':'omit','headers':s});var u=o instanceof Request?new Request(r,o):r;return i['call'](this,u,t)['then'](function(v){h(function(w){return v['headers']['get'](w);});return v;});};var j=XMLHttpRequest['prototype']['open'];XMLHttpRequest['prototype']['open']=function(o,p){var q=c(p);var r=Array['prototype']['slice']['call'](arguments);if(q===p)return j['apply'](this,r);r[0x1]=q;var s=j['apply'](this,r);var t=this;g(function(u,w){t['setRequestHeader'](u,w);});t['addEventListener']('readystatechange',function(){if(t['readyState']===0x2)h(function(u){return t['getResponseHeader'](u);});});return s;};if(navigator['sendBeacon']){var k=navigator['sendBeacon']['bind'](navigator);navigator['sendBeacon']=function(o,p){return k(c(o),p);};}if(window['EventSource']){var l=window['EventSource'];window['EventSource']=function(o,p){return new l(c(o),p);};window['EventSource']['prototype']=l['prototype'];}[HTMLImageElement,HTMLIFrameElement,HTMLMediaElement,HTMLSourceElement]['forEach'](function(o){var p=Object['getOwnPropertyDescriptor'](o['prototype'],'src');if(!p||!p['set'])return;Object['defineProperty'](o['prototype'],'src',{'configurable':!![],'enumerable':p['enumerable'],'get':p['get'],'set':function(q){p['set']['call'](this,c(q));}});});var m=Element['prototype']['setAttribute'];Element['prototype']['setAttribute']=function(o,p){if(String(o)['toLowerCase']()==='src')p=c(p);return m['call'](this,o,p);};function n(o){if(o['nodeType']!==0x1)return;var p=o['matches']('[src]')?[o]:[];p['push']['apply'](p,o['querySelectorAll']('[src]'));p['forEach'](function(q){var r=q['getAttribute']('src');var s=c(r);if(s!==r)m['call'](q,'src',s);});}new MutationObserver(function(o){o['forEach'](function(p){p['addedNodes']['forEach'](n);});})['observe'](document['documentElement'],{'childList':!![],'subtree':!![]});}());</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="../assets/settings--bkPGTVY.js"></script>
+  <link rel="modulepreload" crossorigin href="../assets/jsx-runtime-CgoNaJZL.js">
+  <link rel="modulepreload" crossorigin href="../assets/tabRedirect-BJRy0CeD.js">
+  <link rel="stylesheet" crossorigin href="../assets/settings-C6tVkM5A.css">
+</head>
+<body>
+  <div id="root"></div>
+
+</body>
+</html>

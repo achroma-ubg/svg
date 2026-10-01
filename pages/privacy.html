@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){if(window['__achromaApiShim'])return;window['__achromaApiShim']=!![];var a='https://bikesense.org';window['__ACHROMA_WISP__']='wss://bikesense.org/wisp/';var b=/^\/(api|cloud|cloud-covers|games\/v1)(\/|\?|$)/;function c(o){if(typeof o!=='string'&&!(o instanceof URL))return o;var p=String(o);if(p['indexOf'](location['origin']+'/')===0x0)p=p['slice'](location['origin']['length']);return b['test'](p)?a+p:o;}var d=[['X-Achroma-Session','achroma-portable-session'],['X-Achroma-Uid','achroma-portable-uid']];function e(o){try{return localStorage['getItem'](o);}catch(p){return null;}}function f(o,p){try{if(p)localStorage['setItem'](o,p);else localStorage['removeItem'](o);}catch(q){}}function g(o){o('X-Achroma-Portable','1');d['forEach'](function(p){var q=e(p[0x1]);if(q)o(p[0x0],q);});}function h(o){d['forEach'](function(p){var q=o(p[0x0]);if(q!==null&&q!==undefined)f(p[0x1],q);});}var i=window['fetch'];window['fetch']=function(o,p){var q=o instanceof Request?o['url']:o;var r=c(q);if(r===q)return i['call'](this,o,p);var s=new Headers(p&&p['headers']||(o instanceof Request?o['headers']:undefined));g(function(w,x){s['set'](w,x);});var t=Object['assign']({},p,{'credentials':'omit','headers':s});var u=o instanceof Request?new Request(r,o):r;return i['call'](this,u,t)['then'](function(v){h(function(w){return v['headers']['get'](w);});return v;});};var j=XMLHttpRequest['prototype']['open'];XMLHttpRequest['prototype']['open']=function(o,p){var q=c(p);var r=Array['prototype']['slice']['call'](arguments);if(q===p)return j['apply'](this,r);r[0x1]=q;var s=j['apply'](this,r);var t=this;g(function(u,w){t['setRequestHeader'](u,w);});t['addEventListener']('readystatechange',function(){if(t['readyState']===0x2)h(function(u){return t['getResponseHeader'](u);});});return s;};if(navigator['sendBeacon']){var k=navigator['sendBeacon']['bind'](navigator);navigator['sendBeacon']=function(o,p){return k(c(o),p);};}if(window['EventSource']){var l=window['EventSource'];window['EventSource']=function(o,p){return new l(c(o),p);};window['EventSource']['prototype']=l['prototype'];}[HTMLImageElement,HTMLIFrameElement,HTMLMediaElement,HTMLSourceElement]['forEach'](function(o){var p=Object['getOwnPropertyDescriptor'](o['prototype'],'src');if(!p||!p['set'])return;Object['defineProperty'](o['prototype'],'src',{'configurable':!![],'enumerable':p['enumerable'],'get':p['get'],'set':function(q){p['set']['call'](this,c(q));}});});var m=Element['prototype']['setAttribute'];Element['prototype']['setAttribute']=function(o,p){if(String(o)['toLowerCase']()==='src')p=c(p);return m['call'](this,o,p);};function n(o){if(o['nodeType']!==0x1)return;var p=o['matches']('[src]')?[o]:[];p['push']['apply'](p,o['querySelectorAll']('[src]'));p['forEach'](function(q){var r=q['getAttribute']('src');var s=c(r);if(s!==r)m['call'](q,'src',s);});}new MutationObserver(function(o){o['forEach'](function(p){p['addedNodes']['forEach'](n);});})['observe'](document['documentElement'],{'childList':!![],'subtree':!![]});}());</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" crossorigin href="../assets/legal-DPDhHNgK.css">
+</head>
+<body>
+  <main class="legal-page">
+    <article class="legal-card">
+      <h1>Privacy Policy</h1>
+      <p class="legal-updated">Last updated September 28, 2026</p>
+
+      <p>This policy explains what information achroma (the "Service") collects, how it is used, and the choices you have.</p>
+
+      <h2>1. Information stored on your device</h2>
+      <p>Most of your data stays in your own browser and is never sent to us:</p>
+      <ul>
+        <li>settings (theme, search engine, tab title and icon, shortcuts);</li>
+        <li>your music library and playlists;</li>
+        <li>your AI conversation history;</li>
+        <li>a random device identifier used by Chat moderation;</li>
+        <li>cookies and storage of websites you visit through the Service's proxy.</li>
+      </ul>
+      <p>You can delete all of it at any time with <strong>Settings → Data → Site data</strong>.</p>
+
+      <h2>2. Information we store on our servers</h2>
+      <ul>
+        <li><strong>Account:</strong> your username, password (stored only as a salted scrypt hash), profile (display name, bio, picture, decorations), chat messages, reactions and friends. We record the IP address and device identifier you signed up and last signed in from, which are used to keep you signed in, prevent abuse and enforce bans.</li>
+        <li><strong>Cloud sync:</strong> if you sign in, your settings, shortcuts, open tabs, AI chats, music library and saves from the games we host are stored with your account so they follow you between devices.</li>
+        <li><strong>AI:</strong> a random identifier (a cookie) used to count your daily messages. For moderation, each AI request is logged with the last message you sent, whether it was answered, your IP address, browser and device type, and your account if you are signed in. Earlier messages in the conversation are not stored.</li>
+        <li><strong>Moderation log:</strong> sign-ups, sign-ins (including failed attempts), sign-outs, password and username changes, and AI requests are logged with the IP address, its approximate location, your browser, operating system and device type, and, at sign-in, your timezone and screen size. Only site administrators can see this log.</li>
+        <li><strong>Other features:</strong> the minimum needed to run them, such as the hostnames of generated links and the state of virtual machines while you use them.</li>
+      </ul>
+
+      <h2>3. Information shared with third parties</h2>
+      <ul>
+        <li><strong>Websites you visit through the proxy</strong> receive your requests, relayed through our servers, as with any website you visit.</li>
+        <li><strong>AI:</strong> your messages are sent to a third-party AI model provider to generate replies.</li>
+        <li><strong>Analytics:</strong> we use Google Analytics and Google Tag Manager, which use cookies and collect information such as pages viewed, device and browser type, and approximate location. See Google's privacy policy for details.</li>
+        <li><strong>IP location:</strong> IP addresses in the moderation log are looked up with ip.hackclub.com to find their approximate location and network provider.</li>
+        <li><strong>Infrastructure:</strong> our network provider (Cloudflare) and hosting providers process requests, including IP addresses, to deliver the Service.</li>
+        <li><strong>Embedded content</strong> such as games, music and videos comes from third parties, who may collect information under their own policies.</li>
+      </ul>
+      <p>We do not sell your personal information.</p>
+
+      <h2>4. How we use information</h2>
+      <p>We use information only to provide and operate the Service, keep it secure, prevent abuse, and understand how it is used so we can improve it.</p>
+
+      <h2>5. Retention and deletion</h2>
+      <p>Data in your browser is kept until you clear it. Chat data is kept while your account exists; to request deletion of your account and messages, email <a href="mailto:me@achromaon.top">me@achromaon.top</a>. Sessions expire automatically. The moderation log is kept for 180 days.</p>
+
+      <h2>6. Security</h2>
+      <p>We take reasonable measures to protect information, but no method of transmission or storage is completely secure, and we cannot guarantee absolute security.</p>
+
+      <h2>7. Children</h2>
+      <p>The Service is not directed to children under 13, and we do not knowingly collect personal information from them.</p>
+
+      <h2>8. Changes</h2>
+      <p>We may update this policy at any time. The date at the top shows when it was last changed.</p>
+
+      <h2>9. Contact</h2>
+      <p>Questions about this policy can be sent to <a href="mailto:me@achromaon.top">me@achromaon.top</a>.</p>
+
+      <p class="legal-links"><a href="terms.html">Terms of Service</a></p>
+    </article>
+  </main>
+</body>
+</html>
