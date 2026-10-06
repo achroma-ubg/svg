@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function () {
+  if (window.__achromaApiShim) return;
+  window.__achromaApiShim = true;
+  var ORIGIN = "https://bikesense.org";
+  window.__ACHROMA_TRANSPORT__ = ORIGIN.replace(/^http/, 'ws') + '/' + ['wi', 'sp'].join('') + '/';
+  var BACKEND = /^\/(api|cloud|cloud-covers|games\/v1|vm)(\/|\?|$)/;
+
+  function fix(url) {
+    if (typeof url !== 'string' && !(url instanceof URL)) return url;
+    var s = String(url);
+    if (s.indexOf(location.origin + '/') === 0) s = s.slice(location.origin.length);
+    return BACKEND.test(s) ? ORIGIN + s : url;
+  }
+
+  var AUTH = [['X-Achroma-Session', 'achroma-portable-session'], ['X-Achroma-Uid', 'achroma-portable-uid']];
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function store(key, value) {
+    try { if (value) localStorage.setItem(key, value); else localStorage.removeItem(key); } catch (e) {}
+  }
+  function eachAuthHeader(fn) {
+    fn('X-Achroma-Portable', '1');
+    AUTH.forEach(function (a) { var v = load(a[1]); if (v) fn(a[0], v); });
+  }
+  // An empty X-Achroma-Session (sign-out) clears the stored token.
+  function capture(getHeader) {
+    AUTH.forEach(function (a) { var v = getHeader(a[0]); if (v !== null && v !== undefined) store(a[1], v); });
+  }
+
+  var nativeFetch = window.fetch;
+  window.fetch = function (input, init) {
+    var url = input instanceof Request ? input.url : input;
+    var fixed = fix(url);
+    if (fixed === url) return nativeFetch.call(this, input, init);
+    var headers = new Headers((init && init.headers) || (input instanceof Request ? input.headers : undefined));
+    eachAuthHeader(function (k, v) { headers.set(k, v); });
+    var opts = Object.assign({}, init, { credentials: 'omit', headers: headers });
+    var req = input instanceof Request ? new Request(fixed, input) : fixed;
+    return nativeFetch.call(this, req, opts).then(function (res) {
+      capture(function (k) { return res.headers.get(k); });
+      return res;
+    });
+  };
+
+  var nativeOpen = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function (method, url) {
+    var fixed = fix(url);
+    var args = Array.prototype.slice.call(arguments);
+    if (fixed === url) return nativeOpen.apply(this, args);
+    args[1] = fixed;
+    var result = nativeOpen.apply(this, args);
+    var xhr = this;
+    eachAuthHeader(function (k, v) { xhr.setRequestHeader(k, v); });
+    xhr.addEventListener('readystatechange', function () {
+      if (xhr.readyState === 2) capture(function (k) { return xhr.getResponseHeader(k); });
+    });
+    return result;
+  };
+
+  if (navigator.sendBeacon) {
+    var nativeBeacon = navigator.sendBeacon.bind(navigator);
+    navigator.sendBeacon = function (url, data) { return nativeBeacon(fix(url), data); };
+  }
+
+  if (window.EventSource) {
+    var NativeEventSource = window.EventSource;
+    window.EventSource = function (url, opts) {
+      return new NativeEventSource(fix(url), opts);
+    };
+    window.EventSource.prototype = NativeEventSource.prototype;
+  }
+
+  [HTMLImageElement, HTMLIFrameElement, HTMLMediaElement, HTMLSourceElement].forEach(function (Type) {
+    var desc = Object.getOwnPropertyDescriptor(Type.prototype, 'src');
+    if (!desc || !desc.set) return;
+    Object.defineProperty(Type.prototype, 'src', {
+      configurable: true,
+      enumerable: desc.enumerable,
+      get: desc.get,
+      set: function (value) { desc.set.call(this, fix(value)); },
+    });
+  });
+
+  var nativeSetAttribute = Element.prototype.setAttribute;
+  Element.prototype.setAttribute = function (name, value) {
+    if (String(name).toLowerCase() === 'src') value = fix(value);
+    return nativeSetAttribute.call(this, name, value);
+  };
+
+  function fixTree(node) {
+    if (node.nodeType !== 1) return;
+    var nodes = node.matches('[src]') ? [node] : [];
+    nodes.push.apply(nodes, node.querySelectorAll('[src]'));
+    nodes.forEach(function (el) {
+      var src = el.getAttribute('src');
+      var fixed = fix(src);
+      if (fixed !== src) nativeSetAttribute.call(el, 'src', fixed);
+    });
+  }
+  new MutationObserver(function (records) {
+    records.forEach(function (r) { r.addedNodes.forEach(fixTree); });
+  }).observe(document.documentElement, { childList: true, subtree: true });
+})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" crossorigin href="../assets/legal-DPDhHNgK.css">
+</head>
+<body>
+  <main class="legal-page">
+    <article class="legal-card">
+      <h1>Terms of Service</h1>
+      <p class="legal-updated">Last updated September 27, 2026</p>
+
+      <p>These Terms of Service ("Terms") govern your use of achroma, including its website and all of its features (the "Service"). By using the Service, you agree to these Terms. If you do not agree, do not use the Service.</p>
+
+      <h2>1. The Service</h2>
+      <p>achroma is a free, non-commercial service. Features may be added, changed or removed at any time, and the Service may be unavailable from time to time. Some features depend on third-party websites and providers that we do not control.</p>
+
+      <h2>2. Acceptable use</h2>
+      <p>You agree to use the Service only in compliance with all laws, regulations and policies that apply to you. You agree not to:</p>
+      <ul>
+        <li>use the Service for any unlawful, harmful, fraudulent or abusive purpose;</li>
+        <li>harass, threaten or impersonate others, or post content that is illegal, hateful or infringes anyone's rights;</li>
+        <li>upload or distribute malware, spam or other harmful material;</li>
+        <li>interfere with, overload, probe or attempt to gain unauthorized access to the Service or any other system;</li>
+        <li>circumvent the Service's own limits, bans or security measures.</li>
+      </ul>
+      <p>We may restrict, suspend or terminate access to the Service or any account, at any time and for any reason, without notice.</p>
+
+      <h2>3. Accounts and content you submit</h2>
+      <p>You are responsible for keeping your account credentials secure and for all activity under your account. You are solely responsible for content you post in Chat, enter into the AI feature, or otherwise submit. We may remove any content at our discretion.</p>
+
+      <h2>4. Third-party content and services</h2>
+      <p>The Service provides access to websites, games, media, AI-generated responses and other content provided by third parties. We do not own, control, endorse or verify that content, and we are not responsible for it, for its availability, or for your dealings with any third party. AI-generated responses may be inaccurate and should not be relied on. Links generated by the Service may stop working or expire.</p>
+
+      <h2>5. Disclaimer of warranties</h2>
+      <p class="legal-caps">The Service is provided "as is" and "as available", without warranties of any kind, whether express or implied, including any warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, availability or security. You use the Service at your own risk.</p>
+
+      <h2>6. Limitation of liability</h2>
+      <p class="legal-caps">To the fullest extent permitted by law, achroma and its operators and contributors will not be liable for any direct, indirect, incidental, special, consequential or punitive damages, or for any loss of data, access, reputation or opportunity, arising out of or related to your use of, or inability to use, the Service or any third-party content accessed through it, even if advised of the possibility of such damages.</p>
+
+      <h2>7. Indemnity</h2>
+      <p>You agree to indemnify and hold harmless achroma and its operators and contributors from any claims, losses or expenses arising from your use of the Service or your violation of these Terms.</p>
+
+      <h2>8. Changes</h2>
+      <p>We may update these Terms at any time. The date at the top shows when they were last changed. Continuing to use the Service after a change means you accept the updated Terms.</p>
+
+      <h2>9. Contact</h2>
+      <p>Questions about these Terms can be sent to <a href="mailto:me@achromaon.top">me@achromaon.top</a>.</p>
+
+      <p class="legal-links"><a href="privacy.html">Privacy Policy</a></p>
+    </article>
+  </main>
+</body>
+</html>

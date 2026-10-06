@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function () {
+  if (window.__achromaApiShim) return;
+  window.__achromaApiShim = true;
+  var ORIGIN = "https://bikesense.org";
+  window.__ACHROMA_TRANSPORT__ = ORIGIN.replace(/^http/, 'ws') + '/' + ['wi', 'sp'].join('') + '/';
+  var BACKEND = /^\/(api|cloud|cloud-covers|games\/v1|vm)(\/|\?|$)/;
+
+  function fix(url) {
+    if (typeof url !== 'string' && !(url instanceof URL)) return url;
+    var s = String(url);
+    if (s.indexOf(location.origin + '/') === 0) s = s.slice(location.origin.length);
+    return BACKEND.test(s) ? ORIGIN + s : url;
+  }
+
+  var AUTH = [['X-Achroma-Session', 'achroma-portable-session'], ['X-Achroma-Uid', 'achroma-portable-uid']];
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function store(key, value) {
+    try { if (value) localStorage.setItem(key, value); else localStorage.removeItem(key); } catch (e) {}
+  }
+  function eachAuthHeader(fn) {
+    fn('X-Achroma-Portable', '1');
+    AUTH.forEach(function (a) { var v = load(a[1]); if (v) fn(a[0], v); });
+  }
+  // An empty X-Achroma-Session (sign-out) clears the stored token.
+  function capture(getHeader) {
+    AUTH.forEach(function (a) { var v = getHeader(a[0]); if (v !== null && v !== undefined) store(a[1], v); });
+  }
+
+  var nativeFetch = window.fetch;
+  window.fetch = function (input, init) {
+    var url = input instanceof Request ? input.url : input;
+    var fixed = fix(url);
+    if (fixed === url) return nativeFetch.call(this, input, init);
+    var headers = new Headers((init && init.headers) || (input instanceof Request ? input.headers : undefined));
+    eachAuthHeader(function (k, v) { headers.set(k, v); });
+    var opts = Object.assign({}, init, { credentials: 'omit', headers: headers });
+    var req = input instanceof Request ? new Request(fixed, input) : fixed;
+    return nativeFetch.call(this, req, opts).then(function (res) {
+      capture(function (k) { return res.headers.get(k); });
+      return res;
+    });
+  };
+
+  var nativeOpen = XMLHttpRequest.prototype.open;
+  XMLHttpRequest.prototype.open = function (method, url) {
+    var fixed = fix(url);
+    var args = Array.prototype.slice.call(arguments);
+    if (fixed === url) return nativeOpen.apply(this, args);
+    args[1] = fixed;
+    var result = nativeOpen.apply(this, args);
+    var xhr = this;
+    eachAuthHeader(function (k, v) { xhr.setRequestHeader(k, v); });
+    xhr.addEventListener('readystatechange', function () {
+      if (xhr.readyState === 2) capture(function (k) { return xhr.getResponseHeader(k); });
+    });
+    return result;
+  };
+
+  if (navigator.sendBeacon) {
+    var nativeBeacon = navigator.sendBeacon.bind(navigator);
+    navigator.sendBeacon = function (url, data) { return nativeBeacon(fix(url), data); };
+  }
+
+  if (window.EventSource) {
+    var NativeEventSource = window.EventSource;
+    window.EventSource = function (url, opts) {
+      return new NativeEventSource(fix(url), opts);
+    };
+    window.EventSource.prototype = NativeEventSource.prototype;
+  }
+
+  [HTMLImageElement, HTMLIFrameElement, HTMLMediaElement, HTMLSourceElement].forEach(function (Type) {
+    var desc = Object.getOwnPropertyDescriptor(Type.prototype, 'src');
+    if (!desc || !desc.set) return;
+    Object.defineProperty(Type.prototype, 'src', {
+      configurable: true,
+      enumerable: desc.enumerable,
+      get: desc.get,
+      set: function (value) { desc.set.call(this, fix(value)); },
+    });
+  });
+
+  var nativeSetAttribute = Element.prototype.setAttribute;
+  Element.prototype.setAttribute = function (name, value) {
+    if (String(name).toLowerCase() === 'src') value = fix(value);
+    return nativeSetAttribute.call(this, name, value);
+  };
+
+  function fixTree(node) {
+    if (node.nodeType !== 1) return;
+    var nodes = node.matches('[src]') ? [node] : [];
+    nodes.push.apply(nodes, node.querySelectorAll('[src]'));
+    nodes.forEach(function (el) {
+      var src = el.getAttribute('src');
+      var fixed = fix(src);
+      if (fixed !== src) nativeSetAttribute.call(el, 'src', fixed);
+    });
+  }
+  new MutationObserver(function (records) {
+    records.forEach(function (r) { r.addedNodes.forEach(fixTree); });
+  }).observe(document.documentElement, { childList: true, subtree: true });
+})();</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="../assets/ai-C19F6rjY.js"></script>
+  <link rel="modulepreload" crossorigin href="../assets/jsx-runtime-CgoNaJZL.js">
+  <link rel="stylesheet" crossorigin href="../assets/ai-x2X8Por2.css">
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+</body>
+</html>
