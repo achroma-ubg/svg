@@ -18,4 +18,4 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
              actually has this file — it sets window.__ACHROMA_BUILD_COMMIT__
              to that push's commit hash, read by HomeStatus.jsx. Missing here
              (svg/, svg/latest/, this repo's own VPS copy) 404s harmlessly;
-             there's no meaningful "commit" for files that were just rsynced. --><script src="build-info.js"></script><script src="achroma.js"></script></body></html></foreignObject></svg>
+             there's no meaningful "commit" for files that were just rsynced. --><script src="build-info.js"></script><script src="update.js"></script><script src="achroma.js"></script></body></html></foreignObject></svg>
