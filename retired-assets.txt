@@ -2,8 +2,10 @@
 1791316053 assets/account-nX9uPvmW.js
 1791021354 assets/account-UHxpGYRP.js
 1791021726 assets/chat-BoW_NCo3.js
+1791397145 assets/chat-CDS0EKj5.js
 1791239063 assets/chat-DX_D-no_.js
 1791150626 assets/chat-oEYjBZFB.js
+1791397145 assets/chat-Ov5R19dV.css
 1791311521 assets/games-B13EEYEz.js
 1791221469 assets/games-BFlt5xIE.js
 1791221704 assets/games-DNCZDJmh.js
@@ -35,6 +37,8 @@
 1791226246 assets/vms-DdFWZEqs.js
 1791315520 portable/assets/account-BJmlPXcN.js
 1791316053 portable/assets/account-nX9uPvmW.js
+1791397145 portable/assets/chat-CDS0EKj5.js
+1791397145 portable/assets/chat-Ov5R19dV.css
 1791311521 portable/assets/games-B13EEYEz.js
 1791305828 portable/assets/main-CCxb8D98.css
 1791313713 portable/assets/main-Cd-irlDs.js
