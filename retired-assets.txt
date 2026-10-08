@@ -40,6 +40,7 @@
 1791400028 assets/chat-DznWZfC-.css
 1791403945 assets/chat-EScdGk6w.css
 1791400028 assets/chat-f1l6TkPV.js
+1791483612 assets/chat-FoRfjMge.js
 1791402822 assets/chat-Fz25L7oh.css
 1791150626 assets/chat-oEYjBZFB.js
 1791481335 assets/chat-OptQE5zI.css
@@ -130,6 +131,7 @@
 1791400028 portable/assets/chat-DznWZfC-.css
 1791403945 portable/assets/chat-EScdGk6w.css
 1791400028 portable/assets/chat-f1l6TkPV.js
+1791483612 portable/assets/chat-FoRfjMge.js
 1791402822 portable/assets/chat-Fz25L7oh.css
 1791481335 portable/assets/chat-OptQE5zI.css
 1791397145 portable/assets/chat-Ov5R19dV.css
