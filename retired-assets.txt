@@ -6,6 +6,7 @@
 1791316053 assets/account-nX9uPvmW.js
 1791021354 assets/account-UHxpGYRP.js
 1791478708 assets/ai-C19F6rjY.js
+1791478847 assets/ai-DXEO1yv0.js
 1791478708 assets/ai-x2X8Por2.css
 1791404903 assets/chat-BA9Y2xxi.js
 1791404903 assets/chat-BansD52I.css
@@ -67,6 +68,7 @@
 1791400028 portable/assets/account-D1uG1_LZ.js
 1791316053 portable/assets/account-nX9uPvmW.js
 1791478708 portable/assets/ai-C19F6rjY.js
+1791478847 portable/assets/ai-DXEO1yv0.js
 1791478708 portable/assets/ai-x2X8Por2.css
 1791404903 portable/assets/chat-BA9Y2xxi.js
 1791404903 portable/assets/chat-BansD52I.css
