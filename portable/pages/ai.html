@@ -6,7 +6,7 @@
   window.__achromaApiShim = true;
   var ORIGIN = "https://bikesense.org";
   window.__ACHROMA_TRANSPORT__ = ORIGIN.replace(/^http/, 'ws') + '/' + ['wi', 'sp'].join('') + '/';
-  var BACKEND = /^\/(api|cloud|cloud-covers|games\/v1|vm)(\/|\?|$)/;
+  var BACKEND = /^\/(api|cloud|cloud-covers|games\/v1|vm|ovm)(\/|\?|$)/;
 
   function fix(url) {
     if (typeof url !== 'string' && !(url instanceof URL)) return url;
