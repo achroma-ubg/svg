@@ -781,7 +781,11 @@ window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);
       delete document.head; delete document.body; delete document.documentElement; delete document.createElement;
       window.__dropLoaderListeners(); delete window.__dropLoaderListeners;
       var root = document.importNode(doc.documentElement, true);
-      var pending = Array.prototype.map.call(root.getElementsByTagNameNS('*', 'script'), function (s) {
+      // A copy of the (live) list: replacing each script below removes it from
+      // getElementsByTagNameNS's result, and walking that live list skipped
+      // every other script. Chrome ran the skipped parser copies anyway;
+      // Firefox and Safari don't, so achroma.js never loaded there (white page).
+      var pending = Array.prototype.slice.call(root.getElementsByTagNameNS('*', 'script')).map(function (s) {
         var mark = document.createComment('');
         s.parentNode.replaceChild(mark, s);
         return [mark, s];
