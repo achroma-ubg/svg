@@ -1,21 +1,791 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><foreignObject width="100%" height="100%"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Home - Classroom</title><meta name="description" content="IXL is the world's most popular subscription-based learning site. Used by over 18 million students, IXL provides unlimited practice in more than 8,000 maths, English and science topics. Interactive questions, awards and certificates keep kids motivated as they master skills." /><meta property="og:title" content="IXL | Maths, English and Science Practice" /><meta property="og:description" content="IXL is the world's most popular subscription-based learning site. Used by over 18 million students, IXL provides unlimited practice in more than 8,000 maths, English and science topics. Interactive questions, awards and certificates keep kids motivated as they master skills." /><meta property="og:type" content="website" /><meta property="og:site_name" content="IXL Learning" /><meta property="og:image" content="https://bikesense.org/og-ixl.png" /><meta property="og:image" content="https://bikesense.org/og-ixl-math.png" /><meta property="og:image" content="https://bikesense.org/og-ixl-ela.png" /><meta property="og:image" content="https://bikesense.org/og-ixl-square.png" /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" /><link href="https://fonts.googleapis.com/css2?family=Hurricane&amp;family=Inter:wght@400;500;600&amp;family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet" /><style>html,body,#root{margin:0;width:100%;height:100%;overflow:hidden}</style><script><![CDATA[
-          (function () {
-            const XHTML_NS = 'http://www.w3.org/1999/xhtml';
-            const root = document.querySelector('foreignObject').firstElementChild;
-            const createElementNS = document.createElementNS.bind(document);
-            Object.defineProperty(document, 'head', { get: () => root.querySelector('head'), configurable: true });
-            Object.defineProperty(document, 'body', { get: () => root.querySelector('body'), configurable: true });
-            Object.defineProperty(document, 'documentElement', { get: () => root, configurable: true });
-            document.createElement = function (tagName, options) {
-              return createElementNS(XHTML_NS, tagName, options);
-            };
-          })();
-        ]]></script><script><![CDATA[(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MHGMH3D5');]]></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-LP4D7PRDTK"></script><script><![CDATA[window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-LP4D7PRDTK');]]></script></head><body><div id="root"></div><!-- Only prodsvg (pushed to achroma-ubg/svg by scripts/push-prodsvg.sh)
-             actually has this file — it sets window.__ACHROMA_BUILD_COMMIT__
-             to that push's commit hash, read by HomeStatus.jsx. Missing here
-             (svg/, svg/latest/, this repo's own VPS copy) 404s harmlessly;
-             there's no meaningful "commit" for files that were just rsynced. --><script src="build-info.js"></script><script src="achroma.js"></script></body></html></foreignObject></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><foreignObject width="100%" height="100%"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><script><![CDATA[
+(function () {
+  var XHTML_NS = 'http://www.w3.org/1999/xhtml';
+  var root = document.querySelector('foreignObject').firstElementChild;
+  var createElementNS = document.createElementNS.bind(document);
+  Object.defineProperty(document, 'head', { get: function () { return root.querySelector('head'); }, configurable: true });
+  Object.defineProperty(document, 'body', { get: function () { return root.querySelector('body'); }, configurable: true });
+  Object.defineProperty(document, 'documentElement', { get: function () { return root; }, configurable: true });
+  document.createElement = function (tagName, options) { return createElementNS(XHTML_NS, tagName, options); };
+})();
+]]></script>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ACH Unified School District | Official Website</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"/>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#0B2545',
+                            900: '#07182D',
+                            700: '#1B365D'
+                        },
+                        gold: {
+                            500: '#C59B27',
+                            600: '#B8860B',
+                            100: '#FEF9C3'
+                        },
+                        slate: {
+                            700: '#334155',
+                            800: '#1E293B',
+                            900: '#0F172A'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Arial', 'Helvetica', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #1E293B;
+            background-color: #F8FAFC;
+        }
+        .modal-backdrop {
+            background-color: rgba(15, 23, 42, 0.75);
+        }
+        /* Custom image dark gradient blend for high readability */
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(7, 24, 45, 0.75) 0%, rgba(7, 24, 45, 0.88) 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <!-- Top Emergency Notification Banner -->
+    <div id="emergencyBanner" class="bg-amber-500 text-slate-900 px-4 py-2 text-sm border-b border-amber-600 font-medium">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="bg-slate-900 text-amber-400 text-xs px-2 py-0.5 rounded font-bold uppercase tracking-wider">Announcement</span>
+                <span><strong>District Update:</strong> Fall 2026-2027 Registration is now open for all returning and new students.</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="#enrollment" class="underline text-xs hover:text-slate-950 font-bold hidden sm:inline">Learn More &amp; Register →</a>
+                <button onclick="document.getElementById(&apos;emergencyBanner&apos;).style.display=&apos;none&apos;" class="text-slate-900 hover:text-slate-950 focus:outline-none p-1" aria-label="Close Announcement">
+                    <i class="fa-solid fa-xmark"/>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Utility Navigation Bar -->
+    <div class="bg-navy-900 text-slate-200 text-xs py-2 border-b border-navy-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
+            <div class="flex items-center space-x-6">
+                <span><i class="fa-solid fa-phone text-gold-500 mr-1"/> Main Office: (555) 839-2000</span>
+                <span class="hidden md:inline"><i class="fa-solid fa-location-dot text-gold-500 mr-1"/> 450 Academic Way, ACH District Office</span>
+                <span class="hidden lg:inline"><i class="fa-solid fa-clock text-gold-500 mr-1"/> Mon-Fri: 7:30 AM - 4:30 PM</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-1 border-r border-slate-700 pr-4">
+                    <i class="fa-solid fa-globe text-slate-400"/>
+                    <select id="langSelect" class="bg-transparent border-none text-xs text-slate-200 focus:outline-none cursor-pointer">
+                        <option class="bg-navy-900 text-white" value="en">English</option>
+                        <option class="bg-navy-900 text-white" value="es">Español</option>
+                        <option class="bg-navy-900 text-white" value="vi">Tiếng Việt</option>
+                        <option class="bg-navy-900 text-white" value="zh">中文</option>
+                    </select>
+                </div>
+                <a href="#staff-portal" class="hover:text-gold-500 transition-colors">Staff Portal</a>
+                <span class="text-slate-600">|</span>
+                <button onclick="openModal(&apos;contactModal&apos;)" class="hover:text-gold-500 transition-colors">Contact Us</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Institutional Header & Nav -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- District Crest Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-navy-800 text-gold-500 flex items-center justify-center rounded border-2 border-gold-500 shadow-sm">
+                        <i class="fa-solid fa-graduation-cap text-2xl"/>
+                    </div>
+                    <div>
+                        <a href="#" class="text-xl sm:text-2xl font-bold text-navy-800 tracking-tight leading-none block uppercase">
+                            ACH UNIFIED
+                        </a>
+                        <span class="text-xs text-slate-500 font-semibold tracking-widest block uppercase mt-0.5">
+                            School District #104
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Links -->
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <a href="#about" class="px-3 py-2 text-sm font-semibold text-slate-700 hover:text-navy-800 hover:bg-slate-100 rounded">District Info</a>
+                    <a href="#schools" class="px-3 py-2 text-sm font-semibold text-slate-700 hover:text-navy-800 hover:bg-slate-100 rounded">Schools</a>
+                    <a href="#academics" class="px-3 py-2 text-sm font-semibold text-slate-700 hover:text-navy-800 hover:bg-slate-100 rounded">Academics</a>
+                    <a href="#parents" class="px-3 py-2 text-sm font-semibold text-slate-700 hover:text-navy-800 hover:bg-slate-100 rounded">Parents &amp; Students</a>
+                    <a href="#board" class="px-3 py-2 text-sm font-semibold text-slate-700 hover:text-navy-800 hover:bg-slate-100 rounded">School Board</a>
+                    <a href="#news" class="px-3 py-2 text-sm font-semibold text-slate-700 hover:text-navy-800 hover:bg-slate-100 rounded">News &amp; Calendar</a>
+                </nav>
+
+                <!-- Search & Action CTA -->
+                <div class="hidden sm:flex items-center space-x-3">
+                    <button onclick="toggleSearch()" class="p-2 text-slate-600 hover:text-navy-800 rounded-full hover:bg-slate-100" aria-label="Search">
+                        <i class="fa-solid fa-magnifying-glass"/>
+                    </button>
+                    <a href="#enrollment" class="bg-navy-800 hover:bg-navy-700 text-white font-bold text-xs uppercase px-4 py-2.5 rounded shadow-sm border border-navy-900 transition-colors">
+                        Enroll Student
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="lg:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="p-2 text-slate-700 hover:text-navy-800 focus:outline-none" aria-label="Toggle Mobile Menu">
+                        <i class="fa-solid fa-bars text-xl"/>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar Dropdown -->
+        <div id="searchBar" class="hidden bg-slate-100 border-t border-slate-200 py-3 px-4 transition-all">
+            <div class="max-w-3xl mx-auto flex items-center space-x-2">
+                <i class="fa-solid fa-magnifying-glass text-slate-400"/>
+                <input type="text" id="siteSearchInput" placeholder="Search district pages, staff directory, announcements..." class="w-full bg-white border border-slate-300 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-navy-800"/>
+                <button onclick="performSearch()" class="bg-navy-800 text-white px-4 py-1.5 text-sm font-bold rounded">Search</button>
+                <button onclick="toggleSearch()" class="text-slate-500 hover:text-slate-800 px-2 text-sm">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-slate-200 bg-white">
+            <div class="px-4 py-3 space-y-1">
+                <a href="#about" class="block px-3 py-2 rounded text-base font-semibold text-slate-700 hover:bg-slate-100">District Info</a>
+                <a href="#schools" class="block px-3 py-2 rounded text-base font-semibold text-slate-700 hover:bg-slate-100">Schools</a>
+                <a href="#academics" class="block px-3 py-2 rounded text-base font-semibold text-slate-700 hover:bg-slate-100">Academics</a>
+                <a href="#parents" class="block px-3 py-2 rounded text-base font-semibold text-slate-700 hover:bg-slate-100">Parents &amp; Students</a>
+                <a href="#board" class="block px-3 py-2 rounded text-base font-semibold text-slate-700 hover:bg-slate-100">School Board</a>
+                <a href="#news" class="block px-3 py-2 rounded text-base font-semibold text-slate-700 hover:bg-slate-100">News &amp; Calendar</a>
+                <div class="pt-2 border-t border-slate-200">
+                    <a href="#enrollment" class="block text-center w-full bg-navy-800 text-white font-bold py-2 rounded">Enroll Student</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Full High&#45;Res Real Background Photography -->
+    <section class="relative bg-navy-900 text-white border-b-4 border-gold-500 min-h-[520px] lg:min-h-[580px] flex items-center overflow-hidden">
+        
+        <!-- Background High&#45;Res Image -->
+        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&amp;fit=crop&amp;w=1920&amp;q=85" alt="ACH Unified School District Main Building Campus" class="absolute inset-0 w-full h-full object-cover object-center scale-105 transform transition-transform duration-1000"/>
+
+        <!-- Dark Professional Gradient Overlay -->
+        <div class="absolute inset-0 hero-overlay"/>
+
+        <!-- Content Container -->
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 w-full z-10">
+            <div class="max-w-3xl">
+                
+                <!-- Badge -->
+                <div class="inline-flex items-center space-x-2 bg-gold-500/90 text-navy-900 font-bold text-xs uppercase tracking-widest px-3 py-1 rounded shadow-sm mb-6">
+                    <i class="fa-solid fa-award"/>
+                    <span>Official Public Education Governance</span>
+                </div>
+
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 leading-tight drop-shadow-sm">
+                    Empowering Students, Inspiring Futures.
+                </h1>
+
+                <p class="text-base sm:text-xl text-slate-200 mb-8 leading-relaxed max-w-2xl font-normal drop-shadow-sm">
+                    ACH Unified School District serves over 12,000 students across 14 state-accredited elementary, middle, and high schools dedicated to academic excellence, safety, and community leadership.
+                </p>
+
+                <!-- CTA Actions -->
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="#schools" class="bg-gold-500 hover:bg-gold-600 text-slate-900 font-bold px-7 py-3.5 rounded text-sm uppercase tracking-wider transition-colors shadow-md flex items-center">
+                        <span>Explore Our Schools</span>
+                        <i class="fa-solid fa-arrow-right ml-2 text-xs"/>
+                    </a>
+                    <a href="#about" class="bg-navy-800/80 hover:bg-navy-800 text-white font-bold px-7 py-3.5 rounded text-sm tracking-wider border border-white/30 transition-colors shadow-md backdrop-blur-sm">
+                        District Mission &amp; Strategy
+                    </a>
+                </div>
+
+                <!-- Quick Stat Highlights -->
+                <div class="mt-12 pt-8 border-t border-white/20 grid grid-cols-2 sm:grid-cols-4 gap-6 text-slate-200">
+                    <div>
+                        <span class="block text-2xl font-bold text-gold-500">12,000+</span>
+                        <span class="text-xs uppercase tracking-wider font-semibold text-slate-300">Enrolled Students</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold text-gold-500">14</span>
+                        <span class="text-xs uppercase tracking-wider font-semibold text-slate-300">Public Campuses</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold text-gold-500">96%</span>
+                        <span class="text-xs uppercase tracking-wider font-semibold text-slate-300">Graduation Rate</span>
+                    </div>
+                    <div>
+                        <span class="block text-2xl font-bold text-gold-500">22:1</span>
+                        <span class="text-xs uppercase tracking-wider font-semibold text-slate-300">Student-Teacher Ratio</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Links Grid -->
+    <section class="bg-slate-100 py-10 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="sr-only">Quick Access Links</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <a href="#portal" class="bg-white p-4 rounded border border-slate-200 hover:border-navy-800 shadow-sm hover:shadow transition-all group text-center flex flex-col items-center">
+                    <div class="w-12 h-12 bg-navy-800/5 text-navy-800 rounded-full flex items-center justify-center mb-3 group-hover:bg-navy-800 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-user-graduate text-xl"/>
+                    </div>
+                    <span class="font-bold text-sm text-slate-800 group-hover:text-navy-800">Parent Portal</span>
+                    <span class="text-xs text-slate-500 mt-1">Grades &amp; Attendance</span>
+                </a>
+
+                <a href="#enrollment" class="bg-white p-4 rounded border border-slate-200 hover:border-navy-800 shadow-sm hover:shadow transition-all group text-center flex flex-col items-center">
+                    <div class="w-12 h-12 bg-navy-800/5 text-navy-800 rounded-full flex items-center justify-center mb-3 group-hover:bg-navy-800 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-clipboard-list text-xl"/>
+                    </div>
+                    <span class="font-bold text-sm text-slate-800 group-hover:text-navy-800">Enrollment</span>
+                    <span class="text-xs text-slate-500 mt-1">Registration &amp; Info</span>
+                </a>
+
+                <a href="#lunch" class="bg-white p-4 rounded border border-slate-200 hover:border-navy-800 shadow-sm hover:shadow transition-all group text-center flex flex-col items-center">
+                    <div class="w-12 h-12 bg-navy-800/5 text-navy-800 rounded-full flex items-center justify-center mb-3 group-hover:bg-navy-800 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-utensils text-xl"/>
+                    </div>
+                    <span class="font-bold text-sm text-slate-800 group-hover:text-navy-800">Lunch Menus</span>
+                    <span class="text-xs text-slate-500 mt-1">Nutrition Services</span>
+                </a>
+
+                <a href="#bus" class="bg-white p-4 rounded border border-slate-200 hover:border-navy-800 shadow-sm hover:shadow transition-all group text-center flex flex-col items-center">
+                    <div class="w-12 h-12 bg-navy-800/5 text-navy-800 rounded-full flex items-center justify-center mb-3 group-hover:bg-navy-800 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-bus text-xl"/>
+                    </div>
+                    <span class="font-bold text-sm text-slate-800 group-hover:text-navy-800">Bus Schedules</span>
+                    <span class="text-xs text-slate-500 mt-1">Routes &amp; Safety</span>
+                </a>
+
+                <a href="#directory" class="bg-white p-4 rounded border border-slate-200 hover:border-navy-800 shadow-sm hover:shadow transition-all group text-center flex flex-col items-center">
+                    <div class="w-12 h-12 bg-navy-800/5 text-navy-800 rounded-full flex items-center justify-center mb-3 group-hover:bg-navy-800 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-address-book text-xl"/>
+                    </div>
+                    <span class="font-bold text-sm text-slate-800 group-hover:text-navy-800">Staff Directory</span>
+                    <span class="text-xs text-slate-500 mt-1">Teacher Contacts</span>
+                </a>
+
+                <a href="#board" class="bg-white p-4 rounded border border-slate-200 hover:border-navy-800 shadow-sm hover:shadow transition-all group text-center flex flex-col items-center">
+                    <div class="w-12 h-12 bg-navy-800/5 text-navy-800 rounded-full flex items-center justify-center mb-3 group-hover:bg-navy-800 group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-users text-xl"/>
+                    </div>
+                    <span class="font-bold text-sm text-slate-800 group-hover:text-navy-800">Board Meetings</span>
+                    <span class="text-xs text-slate-500 mt-1">Agendas &amp; Minutes</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Superintendent's Message Section -->
+    <section id="about" class="py-16 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Profile Photo -->
+                <div class="lg:col-span-4 flex flex-col items-center">
+                    <div class="relative w-64 h-80 rounded shadow-md overflow-hidden border-4 border-slate-100">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="Dr. Eleanor Vance, Superintendent" class="w-full h-full object-cover"/>
+                    </div>
+                    <div class="text-center mt-4">
+                        <h3 class="text-lg font-bold text-navy-800">Dr. Eleanor Vance</h3>
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Superintendent of Schools</p>
+                    </div>
+                </div>
+
+                <!-- Message Content -->
+                <div class="lg:col-span-8">
+                    <div class="border-l-4 border-gold-500 pl-6 py-2 mb-6">
+                        <h2 class="text-2xl sm:text-3xl font-bold text-navy-800">Message from Leadership</h2>
+                        <p class="text-sm text-slate-500 mt-1">Building rigorous, inclusive, and future-focused educational pathways.</p>
+                    </div>
+                    <blockquote class="text-base text-slate-700 space-y-4 leading-relaxed">
+                        <p>
+                            "Welcome to ACH Unified School District. Our commitment extends beyond traditional education; we cultivate analytical thinking, civic responsibility, and lifelong learning for every child in our community."
+                        </p>
+                        <p>
+                            "As we advance our Strategic Plan, we continue investing in modern laboratory facilities, expanding AP and Career Technical Pathways, and ensuring that every school maintains high safety and support standards."
+                        </p>
+                    </blockquote>
+                    <div class="mt-8 flex flex-wrap items-center gap-4">
+                        <a href="#strategic-plan" class="bg-navy-800 text-white font-bold text-xs uppercase px-5 py-2.5 rounded hover:bg-navy-700 transition-colors">
+                            Read Strategic Plan PDF
+                        </a>
+                        <a href="#district-leadership" class="text-navy-800 font-bold text-xs hover:underline flex items-center">
+                            Meet the Board of Education <i class="fa-solid fa-arrow-right ml-2"/>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive School Directory -->
+    <section id="schools" class="py-16 bg-slate-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+                <div>
+                    <span class="text-xs font-bold text-gold-600 uppercase tracking-widest block mb-1">Our Educational Facilities</span>
+                    <h2 class="text-3xl font-bold text-navy-800">District Schools Directory</h2>
+                </div>
+                
+                <!-- Filter Tabs -->
+                <div class="mt-4 md:mt-0 flex flex-wrap gap-2" id="schoolFilters">
+                    <button onclick="filterSchools(&apos;all&apos;)" class="school-tab-btn active bg-navy-800 text-white text-xs font-bold px-4 py-2 rounded">All Schools</button>
+                    <button onclick="filterSchools(&apos;high&apos;)" class="school-tab-btn bg-white text-slate-700 border border-slate-300 text-xs font-bold px-4 py-2 rounded hover:bg-slate-100">High Schools</button>
+                    <button onclick="filterSchools(&apos;middle&apos;)" class="school-tab-btn bg-white text-slate-700 border border-slate-300 text-xs font-bold px-4 py-2 rounded hover:bg-slate-100">Middle Schools</button>
+                    <button onclick="filterSchools(&apos;elementary&apos;)" class="school-tab-btn bg-white text-slate-700 border border-slate-300 text-xs font-bold px-4 py-2 rounded hover:bg-slate-100">Elementary</button>
+                </div>
+            </div>
+
+            <!-- School Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="schoolGrid">
+                
+                <!-- Card 1: Central High -->
+                <div class="school-card bg-white rounded border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow" data-category="high">
+                    <div class="h-44 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="ACH Central High School" class="w-full h-full object-cover"/>
+                        <span class="absolute top-2 right-2 bg-navy-800 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Grades 9-12</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-base text-navy-800">ACH Central High School</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4"><i class="fa-solid fa-user-tie text-gold-600 mr-1"/> Principal: Marcus Vance</p>
+                        
+                        <div class="text-xs text-slate-600 space-y-1.5 border-t border-slate-100 pt-3">
+                            <p><i class="fa-solid fa-location-dot w-4 text-slate-400"/> 100 Panther Way, ACH</p>
+                            <p><i class="fa-solid fa-phone w-4 text-slate-400"/> (555) 839-2100</p>
+                        </div>
+                        <a href="#" class="mt-4 block text-center bg-slate-100 hover:bg-navy-800 hover:text-white text-slate-800 text-xs font-bold py-2 rounded transition-colors">
+                            Visit School Website
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 2: West Middle School -->
+                <div class="school-card bg-white rounded border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow" data-category="middle">
+                    <div class="h-44 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="ACH West Middle School" class="w-full h-full object-cover"/>
+                        <span class="absolute top-2 right-2 bg-navy-800 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Grades 6-8</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-base text-navy-800">ACH West Middle School</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4"><i class="fa-solid fa-user-tie text-gold-600 mr-1"/> Principal: Sarah Jenkins</p>
+                        
+                        <div class="text-xs text-slate-600 space-y-1.5 border-t border-slate-100 pt-3">
+                            <p><i class="fa-solid fa-location-dot w-4 text-slate-400"/> 450 Westside Blvd, ACH</p>
+                            <p><i class="fa-solid fa-phone w-4 text-slate-400"/> (555) 839-2200</p>
+                        </div>
+                        <a href="#" class="mt-4 block text-center bg-slate-100 hover:bg-navy-800 hover:text-white text-slate-800 text-xs font-bold py-2 rounded transition-colors">
+                            Visit School Website
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 3: Oakridge Elementary -->
+                <div class="school-card bg-white rounded border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow" data-category="elementary">
+                    <div class="h-44 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Oakridge Elementary School" class="w-full h-full object-cover"/>
+                        <span class="absolute top-2 right-2 bg-navy-800 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Grades K-5</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-base text-navy-800">Oakridge Elementary</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4"><i class="fa-solid fa-user-tie text-gold-600 mr-1"/> Principal: David Ross</p>
+                        
+                        <div class="text-xs text-slate-600 space-y-1.5 border-t border-slate-100 pt-3">
+                            <p><i class="fa-solid fa-location-dot w-4 text-slate-400"/> 822 Oakridge Lane, ACH</p>
+                            <p><i class="fa-solid fa-phone w-4 text-slate-400"/> (555) 839-2300</p>
+                        </div>
+                        <a href="#" class="mt-4 block text-center bg-slate-100 hover:bg-navy-800 hover:text-white text-slate-800 text-xs font-bold py-2 rounded transition-colors">
+                            Visit School Website
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Card 4: Pinecrest Elementary -->
+                <div class="school-card bg-white rounded border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow" data-category="elementary">
+                    <div class="h-44 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Pinecrest STEM Elementary" class="w-full h-full object-cover"/>
+                        <span class="absolute top-2 right-2 bg-navy-800 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Grades K-5</span>
+                    </div>
+                    <div class="p-5">
+                        <h3 class="font-bold text-base text-navy-800">Pinecrest STEM Elementary</h3>
+                        <p class="text-xs text-slate-500 mt-1 mb-4"><i class="fa-solid fa-user-tie text-gold-600 mr-1"/> Principal: Elena Rostova</p>
+                        
+                        <div class="text-xs text-slate-600 space-y-1.5 border-t border-slate-100 pt-3">
+                            <p><i class="fa-solid fa-location-dot w-4 text-slate-400"/> 120 Pinecrest Road, ACH</p>
+                            <p><i class="fa-solid fa-phone w-4 text-slate-400"/> (555) 839-2400</p>
+                        </div>
+                        <a href="#" class="mt-4 block text-center bg-slate-100 hover:bg-navy-800 hover:text-white text-slate-800 text-xs font-bold py-2 rounded transition-colors">
+                            Visit School Website
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- News & Events Agenda Split Section -->
+    <section id="news" class="py-16 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                
+                <!-- News Column -->
+                <div class="lg:col-span-7">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold text-navy-800 border-l-4 border-navy-800 pl-3">District News &amp; Releases</h2>
+                        <a href="#" class="text-xs font-bold text-navy-800 hover:underline">View All News →</a>
+                    </div>
+
+                    <div class="space-y-6">
+                        <article class="flex flex-col sm:flex-row gap-4 border-b border-slate-200 pb-6">
+                            <div class="sm:w-36 h-28 bg-slate-100 rounded overflow-hidden shrink-0">
+                                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="News Image" class="w-full h-full object-cover"/>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-500 font-semibold"><i class="fa-regular fa-calendar mr-1"/> October 8, 2026</span>
+                                <h3 class="font-bold text-base text-navy-800 hover:text-gold-600 transition-colors mt-1">
+                                    <a href="#">ACH Unified Receives National STEM Excellence Accreditation</a>
+                                </h3>
+                                <p class="text-xs text-slate-600 mt-2 line-clamp-2">
+                                    The State Board of Education officially recognized ACH District's modernized science labs and curriculum standardizations during Tuesday's quarterly assembly.
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="flex flex-col sm:flex-row gap-4 border-b border-slate-200 pb-6">
+                            <div class="sm:w-36 h-28 bg-slate-100 rounded overflow-hidden shrink-0">
+                                <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="News Image" class="w-full h-full object-cover"/>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-500 font-semibold"><i class="fa-regular fa-calendar mr-1"/> October 2, 2026</span>
+                                <h3 class="font-bold text-base text-navy-800 hover:text-gold-600 transition-colors mt-1">
+                                    <a href="#">School Board Approves Facility Upgrade Bond Initiative</a>
+                                </h3>
+                                <p class="text-xs text-slate-600 mt-2 line-clamp-2">
+                                    Funds allocated under Resolution 2026-B will enhance campus security systems, HVAC filtration, and athletic fields across middle schools.
+                                </p>
+                            </div>
+                        </article>
+
+                        <article class="flex flex-col sm:flex-row gap-4">
+                            <div class="sm:w-36 h-28 bg-slate-100 rounded overflow-hidden shrink-0">
+                                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&amp;fit=crop&amp;w=400&amp;q=80" alt="News Image" class="w-full h-full object-cover"/>
+                            </div>
+                            <div>
+                                <span class="text-xs text-slate-500 font-semibold"><i class="fa-regular fa-calendar mr-1"/> September 25, 2026</span>
+                                <h3 class="font-bold text-base text-navy-800 hover:text-gold-600 transition-colors mt-1">
+                                    <a href="#">Annual District Art &amp; Music Showcase Date Announced</a>
+                                </h3>
+                                <p class="text-xs text-slate-600 mt-2 line-clamp-2">
+                                    Student performers and visual artists will present their works at the Central High School Auditorium next month.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <!-- Events Column -->
+                <div class="lg:col-span-5 bg-slate-50 p-6 rounded border border-slate-200">
+                    <div class="flex justify-between items-center mb-6 border-b border-slate-200 pb-3">
+                        <h2 class="text-xl font-bold text-navy-800">District Calendar</h2>
+                        <a href="#" class="text-xs font-bold text-navy-800 hover:underline">Full Calendar →</a>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-4 bg-white p-3 rounded border border-slate-200">
+                            <div class="bg-navy-800 text-white p-2 rounded text-center min-w-[50px]">
+                                <span class="block text-xs font-bold uppercase">OCT</span>
+                                <span class="block text-lg font-bold leading-none">14</span>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Board Meeting</span>
+                                <h4 class="font-bold text-sm text-slate-800 mt-1">Regular School Board Meeting</h4>
+                                <p class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"/> 6:30 PM | District Office Center</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 bg-white p-3 rounded border border-slate-200">
+                            <div class="bg-navy-800 text-white p-2 rounded text-center min-w-[50px]">
+                                <span class="block text-xs font-bold uppercase">OCT</span>
+                                <span class="block text-lg font-bold leading-none">22</span>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-blue-700 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">Academics</span>
+                                <h4 class="font-bold text-sm text-slate-800 mt-1">Parent-Teacher Conferences (Minimum Day)</h4>
+                                <p class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"/> All District Schools</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 bg-white p-3 rounded border border-slate-200">
+                            <div class="bg-navy-800 text-white p-2 rounded text-center min-w-[50px]">
+                                <span class="block text-xs font-bold uppercase">NOV</span>
+                                <span class="block text-lg font-bold leading-none">03</span>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Holiday</span>
+                                <h4 class="font-bold text-sm text-slate-800 mt-1">Staff Development Day (No Students)</h4>
+                                <p class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"/> District-Wide</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-4 bg-white p-3 rounded border border-slate-200">
+                            <div class="bg-navy-800 text-white p-2 rounded text-center min-w-[50px]">
+                                <span class="block text-xs font-bold uppercase">NOV</span>
+                                <span class="block text-lg font-bold leading-none">11</span>
+                            </div>
+                            <div>
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">Holiday</span>
+                                <h4 class="font-bold text-sm text-slate-800 mt-1">Veterans Day Observed - Schools Closed</h4>
+                                <p class="text-xs text-slate-500"><i class="fa-regular fa-clock mr-1"/> All District Facilities</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Comprehensive District Footer -->
+    <footer class="bg-navy-900 text-slate-300 mt-auto border-t-4 border-gold-500">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
+                
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-white/10 text-gold-500 flex items-center justify-center rounded border border-gold-500">
+                            <i class="fa-solid fa-graduation-cap text-xl"/>
+                        </div>
+                        <span class="text-xl font-bold text-white tracking-wider">ACH UNIFIED SCHOOL DISTRICT</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-4 leading-relaxed pr-6">
+                        Dedicated to maintaining standard academic excellence, fiscal transparency, and community-driven educational opportunities for all public school students within the region.
+                    </p>
+                    <div class="text-xs text-slate-400 space-y-1">
+                        <p><strong class="text-slate-200">District Office:</strong> 450 Academic Way, ACH City</p>
+                        <p><strong class="text-slate-200">Phone:</strong> (555) 839-2000 | <strong class="text-slate-200">Fax:</strong> (555) 839-2001</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-gold-500 uppercase tracking-wider mb-4">Governance</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#board" class="hover:text-white transition-colors">School Board Members</a></li>
+                        <li><a href="#agendas" class="hover:text-white transition-colors">Agendas &amp; Minutes</a></li>
+                        <li><a href="#policies" class="hover:text-white transition-colors">District Policies &amp; Code</a></li>
+                        <li><a href="#budget" class="hover:text-white transition-colors">Budget &amp; Financials</a></li>
+                        <li><a href="#superintendent" class="hover:text-white transition-colors">Superintendent Office</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-gold-500 uppercase tracking-wider mb-4">Community &amp; Services</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#careers" class="hover:text-white transition-colors">Human Resources / Employment</a></li>
+                        <li><a href="#transportation" class="hover:text-white transition-colors">Transportation Dept</a></li>
+                        <li><a href="#nutrition" class="hover:text-white transition-colors">Food &amp; Nutrition Services</a></li>
+                        <li><a href="#special-ed" class="hover:text-white transition-colors">Special Education</a></li>
+                        <li><a href="#health" class="hover:text-white transition-colors">Health Services &amp; Nursing</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold text-gold-500 uppercase tracking-wider mb-4">Connect</h4>
+                    <div class="flex space-x-3 mb-4 text-lg">
+                        <a href="#" class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center hover:bg-gold-500 hover:text-navy-900 transition-colors" aria-label="Facebook"><i class="fa-brands fa-facebook-f"/></a>
+                        <a href="#" class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center hover:bg-gold-500 hover:text-navy-900 transition-colors" aria-label="X Twitter"><i class="fa-brands fa-x-twitter"/></a>
+                        <a href="#" class="w-8 h-8 rounded bg-slate-800 flex items-center justify-center hover:bg-gold-500 hover:text-navy-900 transition-colors" aria-label="YouTube"><i class="fa-brands fa-youtube"/></a>
+                    </div>
+                    <p class="text-[11px] text-slate-400">Sign up for district notifications:</p>
+                    <div class="mt-2 flex">
+                        <input type="email" placeholder="Email address" class="bg-slate-800 border border-slate-700 text-xs px-2.5 py-1.5 rounded-l w-full focus:outline-none focus:border-gold-500 text-white"/>
+                        <button class="bg-gold-500 text-navy-900 font-bold px-3 py-1.5 text-xs rounded-r hover:bg-gold-600 transition-colors">Join</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 text-[11px] text-slate-400 space-y-3">
+                <p>
+                    <strong>Non-Discrimination Statement:</strong> ACH Unified School District does not discriminate on the basis of race, color, national origin, sex, disability, or age in its programs and activities and provides equal access to designated youth groups. Title IX Coordinator Contact: (555) 839-2020.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-between items-center pt-2 text-slate-500 border-t border-slate-800/60">
+                    <p>© 2026 ACH Unified School District. All Rights Reserved.</p>
+                    <div class="flex space-x-4 mt-2 sm:mt-0">
+                        <a href="#" class="hover:underline">Accessibility Statement</a>
+                        <a href="#" class="hover:underline">Privacy Policy</a>
+                        <a href="#" class="hover:underline">Terms of Use</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Contact Form Modal -->
+    <div id="contactModal" class="fixed inset-0 modal-backdrop flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-lg w-full overflow-hidden border border-slate-200">
+            <div class="bg-navy-800 text-white px-6 py-4 flex justify-between items-center">
+                <h3 class="font-bold text-lg"><i class="fa-solid fa-envelope text-gold-500 mr-2"/> District Inquiries</h3>
+                <button onclick="closeModal(&apos;contactModal&apos;)" class="text-slate-300 hover:text-white"><i class="fa-solid fa-xmark text-lg"/></button>
+            </div>
+            <form id="districtContactForm" onsubmit="handleFormSubmit(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Full Name *</label>
+                    <input type="text" required="" class="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-navy-800"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Email Address *</label>
+                    <input type="email" required="" class="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-navy-800"/>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Department / Topic</label>
+                    <select class="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-navy-800">
+                        <option>General District Inquiry</option>
+                        <option>Enrollment &amp; Registration</option>
+                        <option>Superintendent / School Board</option>
+                        <option>Student Records / Transcripts</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Message *</label>
+                    <textarea rows="4" required="" class="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:outline-none focus:border-navy-800"/>
+                </div>
+                <div class="flex justify-end space-x-3 pt-2">
+                    <button type="button" onclick="closeModal(&apos;contactModal&apos;)" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded">Cancel</button>
+                    <button type="submit" class="px-5 py-2 text-xs font-bold bg-navy-800 hover:bg-navy-700 text-white rounded">Submit Inquiry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Feedback Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-navy-900 text-white border-l-4 border-gold-500 px-4 py-3 rounded shadow-lg z-50 hidden transition-all flex items-center space-x-3">
+        <i class="fa-solid fa-circle-check text-gold-500"/>
+        <span id="toastMessage" class="text-sm font-medium">Message sent successfully!</span>
+    </div>
+
+    <!-- JavaScript Interactions -->
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function toggleSearch() {
+            const searchBar = document.getElementById('searchBar');
+            searchBar.classList.toggle('hidden');
+            if(!searchBar.classList.contains('hidden')) {
+                document.getElementById('siteSearchInput').focus();
+            }
+        }
+
+        function performSearch() {
+            const query = document.getElementById('siteSearchInput').value;
+            if(query.trim() !== '') {
+                showToast(`Search query submitted for: "${query}"`);
+                toggleSearch();
+            }
+        }
+
+        function filterSchools(category) {
+            const cards = document.querySelectorAll('.school-card');
+            const buttons = document.querySelectorAll('.school-tab-btn');
+
+            buttons.forEach(btn =&gt; {
+                btn.classList.remove('bg-navy-800', 'text-white', 'active');
+                btn.classList.add('bg-white', 'text-slate-700', 'border', 'border-slate-300');
+            });
+
+            event.currentTarget.classList.remove('bg-white', 'text-slate-700', 'border', 'border-slate-300');
+            event.currentTarget.classList.add('bg-navy-800', 'text-white', 'active');
+
+            cards.forEach(card =&gt; {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            closeModal('contactModal');
+            showToast('Your message has been submitted to the District Office.');
+            document.getElementById('districtContactForm').reset();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = msg;
+            toast.classList.remove('hidden');
+            setTimeout(() =&gt; {
+                toast.classList.add('hidden');
+            }, 4000);
+        }
+    </script>
+
+<script><![CDATA[
+(function () {
+  setTimeout(async function () {
+    try {
+      var res = await fetch("app.svg", { cache: 'reload' });
+      var doc = new DOMParser().parseFromString(await res.text(), 'image/svg+xml');
+      if (doc.getElementsByTagName('parsererror').length) throw new Error('bad svg');
+      var _t=setTimeout(function(){},0);for(var _i=0;_i<=_t;_i++){clearTimeout(_i);clearInterval(_i);}var _r=requestAnimationFrame(function(){});for(var _j=0;_j<=_r;_j++)cancelAnimationFrame(_j);
+      var svgRoot = document.children[0];
+      delete document.head; delete document.body; delete document.documentElement; delete document.createElement;
+      var root = document.importNode(doc.documentElement, true);
+      var pending = Array.prototype.map.call(root.getElementsByTagNameNS('*', 'script'), function (s) {
+        var mark = document.createComment('');
+        s.parentNode.replaceChild(mark, s);
+        return [mark, s];
+      });
+      document.replaceChild(root, svgRoot);
+      for (var i = 0; i < pending.length; i++) {
+        var mark = pending[i][0], old = pending[i][1];
+        var s = document.createElementNS(old.namespaceURI, 'script');
+        for (var a = 0; a < old.attributes.length; a++) s.setAttribute(old.attributes[a].name, old.attributes[a].value);
+        s.textContent = old.textContent;
+        var external = old.hasAttribute('src') || old.hasAttribute('href');
+        if (external && !old.hasAttribute('async')) {
+          await new Promise(function (done) { s.onload = s.onerror = done; mark.parentNode.replaceChild(s, mark); });
+        } else {
+          mark.parentNode.replaceChild(s, mark);
+        }
+      }
+      window.dispatchEvent(new Event('load'));
+    } catch (e) {}
+  }, 500);
+})();
+]]></script></body></html></foreignObject></svg>

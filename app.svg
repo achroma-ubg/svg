@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><foreignObject width="100%" height="100%"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Home - Classroom</title><meta name="description" content="IXL is the world's most popular subscription-based learning site. Used by over 18 million students, IXL provides unlimited practice in more than 8,000 maths, English and science topics. Interactive questions, awards and certificates keep kids motivated as they master skills." /><meta property="og:title" content="IXL | Maths, English and Science Practice" /><meta property="og:description" content="IXL is the world's most popular subscription-based learning site. Used by over 18 million students, IXL provides unlimited practice in more than 8,000 maths, English and science topics. Interactive questions, awards and certificates keep kids motivated as they master skills." /><meta property="og:type" content="website" /><meta property="og:site_name" content="IXL Learning" /><meta property="og:image" content="https://bikesense.org/og-ixl.png" /><meta property="og:image" content="https://bikesense.org/og-ixl-math.png" /><meta property="og:image" content="https://bikesense.org/og-ixl-ela.png" /><meta property="og:image" content="https://bikesense.org/og-ixl-square.png" /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" /><link href="https://fonts.googleapis.com/css2?family=Hurricane&amp;family=Inter:wght@400;500;600&amp;family=Roboto:wght@400;500&amp;display=swap" rel="stylesheet" /><style>html,body,#root{margin:0;width:100%;height:100%;overflow:hidden}</style><script><![CDATA[
+          (function () {
+            const XHTML_NS = 'http://www.w3.org/1999/xhtml';
+            const root = document.querySelector('foreignObject').firstElementChild;
+            const createElementNS = document.createElementNS.bind(document);
+            Object.defineProperty(document, 'head', { get: () => root.querySelector('head'), configurable: true });
+            Object.defineProperty(document, 'body', { get: () => root.querySelector('body'), configurable: true });
+            Object.defineProperty(document, 'documentElement', { get: () => root, configurable: true });
+            document.createElement = function (tagName, options) {
+              return createElementNS(XHTML_NS, tagName, options);
+            };
+          })();
+        ]]></script><script><![CDATA[(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MHGMH3D5');]]></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-LP4D7PRDTK"></script><script><![CDATA[window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-LP4D7PRDTK');]]></script></head><body><div id="root"></div><!-- Only prodsvg (pushed to achroma-ubg/svg by scripts/push-prodsvg.sh)
+             actually has this file — it sets window.__ACHROMA_BUILD_COMMIT__
+             to that push's commit hash, read by HomeStatus.jsx. Missing here
+             (svg/, svg/latest/, this repo's own VPS copy) 404s harmlessly;
+             there's no meaningful "commit" for files that were just rsynced. --><script src="build-info.js"></script><script src="achroma.js"></script></body></html></foreignObject></svg>
