@@ -7,7 +7,21 @@
   Object.defineProperty(document, 'body', { get: function () { return root.querySelector('body'); }, configurable: true });
   Object.defineProperty(document, 'documentElement', { get: function () { return root; }, configurable: true });
   document.createElement = function (tagName, options) { return createElementNS(XHTML_NS, tagName, options); };
+  // document.open() would drop the loader's window/document listeners (its
+  // gtag's included); replacing the root doesn't, so track them to drop at
+  // the swap.
+  var addEventListener = EventTarget.prototype.addEventListener, added = [];
+  EventTarget.prototype.addEventListener = function (type, fn, opts) {
+    if (this === window || this === document) added.push([this, type, fn, opts]);
+    return addEventListener.call(this, type, fn, opts);
+  };
+  window.__dropLoaderListeners = function () {
+    EventTarget.prototype.addEventListener = addEventListener;
+    added.forEach(function (a) { a[0].removeEventListener(a[1], a[2], a[3]); });
+  };
 })();
+]]></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-LP4D7PRDTK"></script><script><![CDATA[
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-LP4D7PRDTK',{send_page_view:false});gtag('event','page_view',{event_callback:function(){window.__achromaPV=1;}});
 ]]></script>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -762,9 +776,10 @@
       var res = await fetch("app.svg", { cache: 'reload' });
       var doc = new DOMParser().parseFromString(await res.text(), 'image/svg+xml');
       if (doc.getElementsByTagName('parsererror').length) throw new Error('bad svg');
-      var _t=setTimeout(function(){},0);for(var _i=0;_i<=_t;_i++){clearTimeout(_i);clearInterval(_i);}var _r=requestAnimationFrame(function(){});for(var _j=0;_j<=_r;_j++)cancelAnimationFrame(_j);
+      var _t=setTimeout(function(){},0);for(var _i=0;_i<=_t;_i++){clearTimeout(_i);clearInterval(_i);}var _r=requestAnimationFrame(function(){});for(var _j=0;_j<=_r;_j++)cancelAnimationFrame(_j);['google_tag_manager','google_tag_data','dataLayer','gtag'].forEach(function(k){try{if(!delete window[k])window[k]=undefined;}catch(e){}});
       var svgRoot = document.children[0];
       delete document.head; delete document.body; delete document.documentElement; delete document.createElement;
+      window.__dropLoaderListeners(); delete window.__dropLoaderListeners;
       var root = document.importNode(doc.documentElement, true);
       var pending = Array.prototype.map.call(root.getElementsByTagNameNS('*', 'script'), function (s) {
         var mark = document.createComment('');

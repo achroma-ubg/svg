@@ -14,7 +14,7 @@
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MHGMH3D5');]]></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-LP4D7PRDTK"></script><script><![CDATA[window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-LP4D7PRDTK');]]></script></head><body><div id="root"></div><!-- Only prodsvg (pushed to achroma-ubg/svg by scripts/push-prodsvg.sh)
+})(window,document,'script','dataLayer','GTM-MHGMH3D5');]]></script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-LP4D7PRDTK"></script><script><![CDATA[window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-LP4D7PRDTK',window.__achromaPV?{send_page_view:false}:{});]]></script></head><body><div id="root"></div><!-- Only prodsvg (pushed to achroma-ubg/svg by scripts/push-prodsvg.sh)
              actually has this file — it sets window.__ACHROMA_BUILD_COMMIT__
              to that push's commit hash, read by HomeStatus.jsx. Missing here
              (svg/, svg/latest/, this repo's own VPS copy) 404s harmlessly;
