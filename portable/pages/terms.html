@@ -4,8 +4,16 @@
   <script>(function () {
   if (window.__achromaApiShim) return;
   window.__achromaApiShim = true;
-  var ORIGIN = "https://bikesense.org";
-  window.__ACHROMA_TRANSPORT__ = ORIGIN.replace(/^http/, 'ws') + '/' + ['wi', 'sp'].join('') + '/';
+  var CANDIDATES = ["https://api.spf50krem.com","https://api.tuplantaforma.com","https://api.fotograflar.com","https://api.shor.ch","https://api.tenspot.net","https://api.rymconstrucciones.cl","https://api.bsfa.info","https://api.jurematoz.com","https://api.whatastupididea.com","https://api.alcrb.ru","https://api.shredstreet.com","https://api.garnier-audebourg.org","https://api.fysiomotion.se","https://api.sexualidadesrosario.com.ar","https://api.vaizer.cl","https://bikesense.org"];
+  var ORIGIN = (function () {
+    try { var v = localStorage.getItem('achroma-portable-api'); if (v && CANDIDATES.indexOf(v) >= 0) return v; } catch (e) {}
+    return CANDIDATES[0];
+  })();
+  // In achroma.js the endpoint probe (portableGate) runs alongside the app:
+  // backend fetches wait for it, then use whichever origin it picked. Pages
+  // under pages/ have no gate and use the stored origin as is.
+  var GATE = Promise.resolve(window.__achromaGate).then(function (o) { if (o) ORIGIN = o; }, function () {});
+  window.__ACHROMA_TRANSPORT__ = function () { return GATE.then(function () { return ORIGIN.replace(/^http/, 'ws') + '/' + ['wi', 'sp'].join('') + '/'; }); };
   var BACKEND = /^\/(api|cloud|cloud-covers|games\/v1|vm|ovm)(\/|\?|$)/;
 
   function fix(url) {
@@ -32,8 +40,12 @@
   var nativeFetch = window.fetch;
   window.fetch = function (input, init) {
     var url = input instanceof Request ? input.url : input;
+    if (fix(url) === url) return nativeFetch.call(this, input, init);
+    var self = this;
+    return GATE.then(function () { return backendFetch.call(self, input, init, url); });
+  };
+  function backendFetch(input, init, url) {
     var fixed = fix(url);
-    if (fixed === url) return nativeFetch.call(this, input, init);
     var headers = new Headers((init && init.headers) || (input instanceof Request ? input.headers : undefined));
     eachAuthHeader(function (k, v) { headers.set(k, v); });
     var opts = Object.assign({}, init, { credentials: 'omit', headers: headers });
@@ -42,7 +54,7 @@
       capture(function (k) { return res.headers.get(k); });
       return res;
     });
-  };
+  }
 
   var nativeOpen = XMLHttpRequest.prototype.open;
   XMLHttpRequest.prototype.open = function (method, url) {
