@@ -22,6 +22,8 @@
     if (s.indexOf(location.origin + '/') === 0) s = s.slice(location.origin.length);
     return BACKEND.test(s) ? ORIGIN + s : url;
   }
+  // For links (href) to backend files, which the src rewrites below don't cover.
+  window.__achromaFixUrl = function (url) { return String(fix(url)); };
 
   var AUTH = [['X-Achroma-Session', 'achroma-portable-session'], ['X-Achroma-Uid', 'achroma-portable-uid']];
   function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
