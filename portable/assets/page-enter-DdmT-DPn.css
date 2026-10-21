@@ -1,0 +1,1 @@
+#root:not(:empty){animation:.32s cubic-bezier(.32,.72,0,1) achroma-page-enter}@keyframes achroma-page-enter{0%{opacity:0;transform:translateY(8px)}}@media (prefers-reduced-motion:reduce){#root:not(:empty){animation-name:achroma-page-enter-fade}@keyframes achroma-page-enter-fade{0%{opacity:0}}}
