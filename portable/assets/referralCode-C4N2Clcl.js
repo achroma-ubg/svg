@@ -1,0 +1,1 @@
+var e=`achroma-ref`;function t(t=location.search){try{let n=new URLSearchParams(t).get(`ref`);n&&/^[a-z0-9]{4,12}$/i.test(n)&&localStorage.setItem(e,JSON.stringify({code:n.toLowerCase(),at:Date.now()}))}catch{}}function n(){try{let t=JSON.parse(localStorage.getItem(e)||`null`);if(t&&Date.now()-t.at<2592e6)return t.code}catch{}return null}export{t as n,n as t};
