@@ -43,6 +43,7 @@
 1792702389 assets/chat-BdQADY1b.css
 1792430779 assets/chat-BFxU4goF.js
 1792603300 assets/chat-Bgi83YJq.js
+1792768982 assets/chat-BLWvF_IA.js
 1792700073 assets/chat-bN8pDjMo.js
 1792702926 assets/chat-BP5asEzU.js
 1792513538 assets/chat-BSGQPXL8.js
@@ -224,6 +225,7 @@
 1792702389 portable/assets/chat-BdQADY1b.css
 1792430779 portable/assets/chat-BFxU4goF.js
 1792603300 portable/assets/chat-Bgi83YJq.js
+1792768982 portable/assets/chat-BLWvF_IA.js
 1792700073 portable/assets/chat-bN8pDjMo.js
 1792702926 portable/assets/chat-BP5asEzU.js
 1792513538 portable/assets/chat-BSGQPXL8.js
