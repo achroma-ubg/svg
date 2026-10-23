@@ -18,6 +18,8 @@
 1792762009 assets/account-k966lw2U.css
 1792094123 assets/account-osNi5spy.js
 1792094511 assets/account-RL5IjI-W.js
+1792788097 assets/account-yckMPKY6.css
+1792788097 assets/account-ZXDOxU5v.js
 1791635072 assets/ai-B6RTjlIK.css
 1792016036 assets/ai-BpgZgBkn.js
 1792618568 assets/ai-BqlV8s4b.css
@@ -197,6 +199,8 @@
 1792762009 portable/assets/account-k966lw2U.css
 1792094123 portable/assets/account-osNi5spy.js
 1792094511 portable/assets/account-RL5IjI-W.js
+1792788097 portable/assets/account-yckMPKY6.css
+1792788097 portable/assets/account-ZXDOxU5v.js
 1791635072 portable/assets/ai-B6RTjlIK.css
 1792016036 portable/assets/ai-BpgZgBkn.js
 1792618568 portable/assets/ai-BqlV8s4b.css
