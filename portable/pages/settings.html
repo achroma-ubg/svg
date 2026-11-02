@@ -14,7 +14,7 @@
   // under pages/ have no gate and use the stored origin as is.
   var GATE = Promise.resolve(window.__achromaGate).then(function (o) { if (o) ORIGIN = o; }, function () {});
   window.__ACHROMA_TRANSPORT__ = function () { return GATE.then(function () { return ORIGIN.replace(/^http/, 'ws') + '/' + ['wi', 'sp'].join('') + '/'; }); };
-  var BACKEND = /^\/(api|cloud|cloud-covers|games\/v1|vm|ovm)(\/|\?|$)/;
+  var BACKEND = /^\/(api|astra|cloud|cloud-covers|games\/v1|vm|ovm)(\/|\?|$)/;
 
   function fix(url) {
     if (typeof url !== 'string' && !(url instanceof URL)) return url;
@@ -123,7 +123,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="../assets/settings-VXNCq1oY.js"></script>
+  <script type="module" crossorigin src="../assets/settings-DPccvll3.js"></script>
   <link rel="modulepreload" crossorigin href="../assets/jsx-runtime-D-6n_2XS.js">
   <link rel="modulepreload" crossorigin href="../assets/focusBlank-C_eFfXsN.js">
   <link rel="modulepreload" crossorigin href="../assets/animatedBackgrounds-Budz6KvT.js">

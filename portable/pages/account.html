@@ -14,7 +14,7 @@
   // under pages/ have no gate and use the stored origin as is.
   var GATE = Promise.resolve(window.__achromaGate).then(function (o) { if (o) ORIGIN = o; }, function () {});
   window.__ACHROMA_TRANSPORT__ = function () { return GATE.then(function () { return ORIGIN.replace(/^http/, 'ws') + '/' + ['wi', 'sp'].join('') + '/'; }); };
-  var BACKEND = /^\/(api|cloud|cloud-covers|games\/v1|vm|ovm)(\/|\?|$)/;
+  var BACKEND = /^\/(api|astra|cloud|cloud-covers|games\/v1|vm|ovm)(\/|\?|$)/;
 
   function fix(url) {
     if (typeof url !== 'string' && !(url instanceof URL)) return url;
