@@ -1,1 +1,1 @@
-window.__ACHROMA_BUILD_COMMIT__ = "f128305";
+window.__ACHROMA_BUILD_COMMIT__ = "524c279";
