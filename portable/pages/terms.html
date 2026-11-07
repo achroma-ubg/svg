@@ -63,6 +63,9 @@
       return f.call(this, input, init);
     };
     window.__achromaTranslate = { host: host, real: real, tr: tr, base: base && base.href };
+    // Where website tabs run instead (shell.js browseElsewhere): hosts that
+    // allow a service worker, best filter coverage first.
+    window.__achromaBrowseHosts = ["https://cdn.jsdelivr.net/gh/achroma-ubg/svg@latest/index.svg","https://blue-flower-093ff020f.8.azurestaticapps.net/app.html","https://black-sky-082927e0f.3.azurestaticapps.net/app.html","https://lrqakfyhovf5.objectstorage.uk-london-1.oci.customer-oci.com/n/lrqakfyhovf5/b/learn-maths-7k2/o/app.html","https://objectstorage.uk-london-1.oraclecloud.com/n/lrqakfyhovf5/b/learn-maths-7k2/o/app.html"];
   })();
   var CANDIDATES = ["https://api.spf50krem.com","https://api.tuplantaforma.com","https://api.fotograflar.com","https://api.shor.ch","https://api.tenspot.net","https://api.rymconstrucciones.cl","https://api.bsfa.info","https://api.jurematoz.com","https://api.whatastupididea.com","https://api.alcrb.ru","https://api.shredstreet.com","https://api.garnier-audebourg.org","https://api.fysiomotion.se","https://api.sexualidadesrosario.com.ar","https://api.vaizer.cl","https://d3o3tc6yrlbkr1.cloudfront.net","https://d1h7zhk60qizxf.cloudfront.net","https://d1ke4pade5ztdn.cloudfront.net","https://bikesense.org"];
   var ORIGIN = (function () {
