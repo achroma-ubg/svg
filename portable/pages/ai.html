@@ -4,6 +4,52 @@
   <script>(function () {
   if (window.__achromaApiShim) return;
   window.__achromaApiShim = true;
+  // Opened through Google Translate's site mode (<host-with-dashes>.translate.goog):
+  // Google only serves an .html page when the URL carries its _x_tr_* params
+  // (400 otherwise), and its own script rewrites our page URLs without them,
+  // so Achroma's pages (Chat, Games, Music...) came up blank. Put them back on
+  // every same-site .html URL: frames, fetches (page prefetch) and links.
+  (function () {
+    var host = location.hostname;
+    if (host.slice(-15) !== '.translate.goog') return;
+    var tr = [];
+    new URLSearchParams(location.search).forEach(function (v, k) { if (k.indexOf('_x_tr_') === 0) tr.push([k, v]); });
+    if (!tr.length) tr = [['_x_tr_sl', 'auto'], ['_x_tr_tl', 'en'], ['_x_tr_hl', 'en']];
+    // The page's <base> points at the real host (a-b-c.translate.goog -> a.b.c,
+    // "--" standing for "-"), so relative URLs resolve there: map them back.
+    var real = host.slice(0, -15).split('--').map(function (p) { return p.split('-').join('.'); }).join('-');
+    function withTr(url) {
+      if (typeof url !== 'string' && !(url instanceof URL)) return url;
+      var u;
+      try { u = new URL(String(url), document.baseURI); } catch (e) { return url; }
+      if (u.hostname !== host && u.hostname !== real) return url;
+      if (u.pathname.slice(-5) !== '.html' && u.pathname.slice(-1) !== '/') return url;
+      if (u.hostname === real) { u.protocol = location.protocol; u.host = location.host; }
+      tr.forEach(function (kv) { if (!u.searchParams.has(kv[0])) u.searchParams.set(kv[0], kv[1]); });
+      return u.href;
+    }
+    function hookAttr(proto, attr) {
+      var d = proto && Object.getOwnPropertyDescriptor(proto, attr);
+      if (!d || !d.set) return;
+      Object.defineProperty(proto, attr, { configurable: true, enumerable: d.enumerable, get: d.get,
+        set: function (v) { d.set.call(this, withTr(v)); } });
+    }
+    hookAttr(window.HTMLIFrameElement && HTMLIFrameElement.prototype, 'src');
+    hookAttr(window.HTMLLinkElement && HTMLLinkElement.prototype, 'href');
+    hookAttr(window.HTMLAnchorElement && HTMLAnchorElement.prototype, 'href');
+    var setAttr = Element.prototype.setAttribute;
+    Element.prototype.setAttribute = function (name, value) {
+      var n = String(name).toLowerCase(), t = this.tagName;
+      if ((n === 'src' && t === 'IFRAME') || (n === 'href' && (t === 'LINK' || t === 'A'))) value = withTr(value);
+      return setAttr.call(this, name, value);
+    };
+    var f = window.fetch;
+    if (f) window.fetch = function (input, init) {
+      if (typeof input === 'string' || input instanceof URL) input = withTr(input);
+      return f.call(this, input, init);
+    };
+    window.__achromaTranslate = { host: host, real: real, tr: tr };
+  })();
   var CANDIDATES = ["https://api.spf50krem.com","https://api.tuplantaforma.com","https://api.fotograflar.com","https://api.shor.ch","https://api.tenspot.net","https://api.rymconstrucciones.cl","https://api.bsfa.info","https://api.jurematoz.com","https://api.whatastupididea.com","https://api.alcrb.ru","https://api.shredstreet.com","https://api.garnier-audebourg.org","https://api.fysiomotion.se","https://api.sexualidadesrosario.com.ar","https://api.vaizer.cl","https://d3o3tc6yrlbkr1.cloudfront.net","https://d1h7zhk60qizxf.cloudfront.net","https://d1ke4pade5ztdn.cloudfront.net","https://bikesense.org"];
   var ORIGIN = (function () {
     try { var v = localStorage.getItem('achroma-portable-api'); if (v && CANDIDATES.indexOf(v) >= 0) return v; } catch (e) {}
