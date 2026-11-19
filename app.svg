@@ -18,4 +18,84 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
              actually has this file — it sets window.__ACHROMA_BUILD_COMMIT__
              to that push's commit hash, read by HomeStatus.jsx. Missing here
              (svg/, svg/latest/, this repo's own VPS copy) 404s harmlessly;
-             there's no meaningful "commit" for files that were just rsynced. --><script src="build-info.js"></script><script src="achroma.js"></script></body></html></foreignObject></svg>
+             there's no meaningful "commit" for files that were just rsynced. --><script src="build-info.js"></script><script src="achroma.js"></script><script><![CDATA[
+  (function () {
+    var GAP = 15 * 60 * 1000, RETRY = 2 * 60 * 1000;
+    try { localStorage.getItem('achroma-ad-interstitial-at'); } catch (e) { return; }
+    function count(k) {
+      try { fetch('/api/rt/e', { method: 'POST', body: k, keepalive: true, credentials: 'omit', headers: { 'Content-Type': 'text/plain' } }).catch(function () {}); } catch (e) { /* ads only */ }
+    }
+    function due(key) {
+      var last = 0;
+      try { last = Number(localStorage.getItem(key)) || 0; } catch (e) { return false; }
+      return Date.now() - last >= GAP;
+    }
+    // Top-level elements of <body> and <html>: where Adcash puts its ad containers.
+    function bodyKids() {
+      var a = document.body ? Array.prototype.slice.call(document.body.children) : [];
+      return a.concat(Array.prototype.slice.call(document.documentElement.children));
+    }
+    function added(before) {
+      return bodyKids().filter(function (n) { return before.indexOf(n) === -1 && !/^(SCRIPT|STYLE|LINK|NOSCRIPT)$/.test(n.tagName); });
+    }
+    // One format: ask Adcash when due; whether anything appeared decides the next try.
+    function slot(name, key, fn, onTop) {
+      return function () {
+        if (!due(key) || document.visibilityState === 'hidden' || !window.aclib || !window.aclib[fn]) return;
+        try { localStorage.setItem(key, String(Date.now())); } catch (e) { return; }
+        var before = bodyKids(), seen = false;
+        // Anything the ad adds counts the moment it appears, so an ad closed within seconds
+        // still counts as shown (and its 15 minutes stand) instead of looking like no ad.
+        var mo = new MutationObserver(function () { if (!seen && added(before).length) seen = true; });
+        try {
+          mo.observe(document.documentElement, { childList: true });
+          if (document.body) mo.observe(document.body, { childList: true });
+        } catch (e) { /* ads only */ }
+        count(name + ':ask');
+        try { window.aclib[fn](name === 'inter' ? { zoneId: '12468914' } : { zoneId: '12469942' }); } catch (e) { count(name + ':error'); }
+        var raise = function () {
+          added(before).forEach(function (n) {
+            try { if (getComputedStyle(n).position === 'fixed') n.style.setProperty('z-index', '2147483647', 'important'); } catch (e) { /* ads only */ }
+          });
+        };
+        if (onTop) [500, 1500, 4000, 10000, 30000].forEach(function (ms) { setTimeout(raise, ms); });
+        setTimeout(function () {
+          var miss = key + '-miss', n = 0;
+          mo.disconnect();
+          if (seen || added(before).length) { count(name + ':shown'); try { localStorage.removeItem(miss); } catch (e) { /* ads only */ } return; }
+          count(name + ':empty');
+          // Retry sooner only 3 times in a row, so a missed detection can never mean ads every 2 minutes.
+          try { n = (Number(localStorage.getItem(miss)) || 0) + 1; localStorage.setItem(miss, String(n >= 3 ? 0 : n)); } catch (e) { return; }
+          if (n < 3) try { localStorage.setItem(key, String(Date.now() - GAP + RETRY)); } catch (e) { /* ads only */ }
+        }, 8000);
+      };
+    }
+    var inter = slot('inter', 'achroma-ad-interstitial-at', 'runInterstitial', false);
+    var slider = slot('slider', 'achroma-ad-slider-at', 'runVideoSlider', true);
+    function start(src) {
+      count('lib:' + src);
+      inter();
+      setInterval(inter, 60 * 1000);
+      setTimeout(function () { slider(); setInterval(slider, 60 * 1000); }, 30 * 1000);
+    }
+    count('page');
+    if (window.aclib && window.aclib.runInterstitial) { start('root'); return; }
+    function inject(src, done, fail) {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = src;
+      s.onload = function () { if (window.aclib && window.aclib.runInterstitial) done(); else fail(); };
+      s.onerror = fail;
+      document.head.appendChild(s);
+    }
+    function own() {
+      fetch('/api/rt/c7q2.js', { credentials: 'omit' })
+        .then(function (r) { return r.ok ? r.text() : Promise.reject(); })
+        .then(function (code) {
+          inject(URL.createObjectURL(new Blob([code], { type: 'text/javascript' })), function () { start('own'); }, function () { count('lib:none'); });
+        }, function () { count('lib:none'); });
+    }
+    // acscdn.com first (portable shells have no root page that loaded it), our copy if blocked.
+    inject('https://acscdn.com/script/aclib.js', function () { start('acscdn'); }, own);
+  })();
+]]></script></body></html></foreignObject></svg>
