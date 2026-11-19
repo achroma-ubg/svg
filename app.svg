@@ -70,21 +70,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }, 8000);
       };
     }
-    var inter = slot('inter', 'achroma-ad-interstitial-at', 'runInterstitial', false);
     var slider = slot('slider', 'achroma-ad-slider-at', 'runVideoSlider', true);
     function start(src) {
       count('lib:' + src);
-      inter();
-      setInterval(inter, 60 * 1000);
+      // Interstitial (zone 12468914) removed 2026-11-19: its script opened advertiser tabs on
+      // clicks even when no interstitial was visible. Only the slider runs.
       setTimeout(function () { slider(); setInterval(slider, 60 * 1000); }, 30 * 1000);
     }
     count('page');
-    if (window.aclib && window.aclib.runInterstitial) { start('root'); return; }
+    if (window.aclib && window.aclib.runVideoSlider) { start('root'); return; }
     function inject(src, done, fail) {
       var s = document.createElement('script');
       s.async = true;
       s.src = src;
-      s.onload = function () { if (window.aclib && window.aclib.runInterstitial) done(); else fail(); };
+      s.onload = function () { if (window.aclib && window.aclib.runVideoSlider) done(); else fail(); };
       s.onerror = fail;
       document.head.appendChild(s);
     }
