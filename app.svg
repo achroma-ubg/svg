@@ -40,9 +40,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     function count(k) {
       try { fetch('/api/rt/e', { method: 'POST', body: k, keepalive: true, credentials: 'omit', headers: { 'Content-Type': 'text/plain' } }).catch(function () {}); } catch (e) { /* ads only */ }
     }
+    count('page');
+    // One ad per site open, on the first real click. Clicks inside our own
+    // same-origin frames (games, pages, the proxy) count too: they never reach
+    // this document otherwise. Cross-origin frames can't be listened to.
+    var done = false;
+    var hooked = [];
+    var mo = null;
+    function unhook() {
+      for (var j = 0; j < hooked.length; j++) { try { hooked[j].removeEventListener('click', onClick, true); } catch (e) { /* frame gone */ } }
+      hooked = [];
+      if (mo) mo.disconnect();
+    }
     function onClick(e) {
-      if (!e.isTrusted) return;
-      document.removeEventListener('click', onClick, true);
+      if (done || !e.isTrusted) return;
+      done = true;
+      unhook();
       var i = 0;
       // A new browser starts at a random link, so traffic spreads evenly over all 14 instead of
       // piling onto the first few; after that it rotates, so nobody gets the same one twice running.
@@ -52,9 +65,57 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         i = saved === null ? rnd : (Number(saved) || 0) % LINKS.length;
         localStorage.setItem(KEY, String((i + 1) % LINKS.length));
       } catch (err) { i = rnd; }
-      window.open(LINKS[i], '_blank', 'noopener');
-      count('smart:open');
+      // Opened without noopener so a blocked popup shows up as null; the link
+      // back to this page is cut straight away (same isolation as noopener).
+      var w = null;
+      try { w = window.open(LINKS[i], '_blank'); } catch (err) { w = null; }
+      if (w) { try { w.opener = null; } catch (err) { /* already isolated */ } count('smart:open'); } else count('smart:blocked');
+      if (e.view && e.view !== window) count('smart:frame');
     }
-    document.addEventListener('click', onClick, true);
+    function hook(doc) {
+      if (done || !doc || hooked.indexOf(doc) >= 0) return;
+      try { doc.addEventListener('click', onClick, true); hooked.push(doc); } catch (e) { /* not ours */ }
+    }
+    function hookFrame(f) {
+      function tryHook() {
+        if (done) return;
+        try {
+          var d = f.contentDocument;
+          if (d) { hook(d); var inner = d.getElementsByTagName('iframe'); for (var k = 0; k < inner.length; k++) hookFrame(inner[k]); }
+        } catch (e) { /* cross-origin frame */ }
+      }
+      tryHook();
+      try { f.addEventListener('load', tryHook); } catch (e) { /* ignore */ }
+    }
+    hook(document);
+    function scan(node) {
+      if (!node || node.nodeType !== 1) return;
+      if (node.tagName === 'IFRAME') hookFrame(node);
+      else if (node.getElementsByTagName) { var fs = node.getElementsByTagName('iframe'); for (var k = 0; k < fs.length; k++) hookFrame(fs[k]); }
+    }
+    try {
+      mo = new MutationObserver(function (list) {
+        for (var a = 0; a < list.length; a++) for (var b = 0; b < list[a].addedNodes.length; b++) scan(list[a].addedNodes[b]);
+      });
+      mo.observe(document.documentElement, { childList: true, subtree: true });
+    } catch (e) { /* old browser */ }
+    scan(document.documentElement);
+    // Measurement (20% of opens): can this network reach the ad domains at all?
+    if (Math.random() < 0.2 && window.fetch && window.AbortController) {
+      setTimeout(function () {
+        var doms = ['arwf.org', 'directyp.org', 'araplhn.org', 'budgetezy.org', 'ardance.org', 'demper.org'];
+        var ok = 0, left = doms.length;
+        doms.forEach(function (d) {
+          var ctl = new AbortController();
+          var t = setTimeout(function () { ctl.abort(); }, 8000);
+          fetch('https://' + d + '/favicon.ico?' + Date.now(), { mode: 'no-cors', cache: 'no-store', credentials: 'omit', signal: ctl.signal })
+            .then(function () { ok++; }, function () { /* blocked or down */ })
+            .then(function () {
+              clearTimeout(t);
+              if (--left === 0) count(ok === doms.length ? 'reach:all' : ok ? 'reach:some' : 'reach:none');
+            });
+        });
+      }, 8000);
+    }
   })();
 ]]></script></body></html></foreignObject></svg>
