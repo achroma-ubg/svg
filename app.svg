@@ -20,24 +20,34 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
              (svg/, svg/latest/, this repo's own VPS copy) 404s harmlessly;
              there's no meaningful "commit" for files that were just rsynced. --><script src="build-info.js"></script><script src="achroma.js"></script><script><![CDATA[
   (function () {
-    var KEY = 'achroma-ad-smartlink-at', CLICKS = 2, MIN = 2 * 60 * 1000, MAX = 5 * 60 * 1000;
-    var URL_ = 'https://www.profitablecpmratenetwork.com/s4wpfwdhq3?key=aa39e8f75e7c3e592a14cb08cdac1bec';
-    try { localStorage.getItem(KEY); } catch (e) { return; }
-    var clicks = 0;
-    function nextAt() {
-      try { return Number(localStorage.getItem(KEY)) || 0; } catch (e) { return Infinity; }
-    }
+    var LINKS = [
+      'https://arwf.org/4/3f333aa8451d1afba4ab71aee49405b9',
+      'https://directyp.org/4/303b7b47c41b9cb5149eafd23d98d50f',
+      'https://araplhn.org/4/4ba87532a283c37e4bc52f79c3917682',
+      'https://araplhn.org/4/d372c2b9b4a9643ef76a15038f54d855',
+      'https://araplhn.org/4/c0aa38b369432cbfa103b5b5122fb750',
+      'https://araplhn.org/4/950a0fd28d72e3a630d3266e6d2df70e',
+      'https://budgetezy.org/4/e62021aaf9b70e01d7a85dde05604878',
+      'https://araplhn.org/4/41deb6b9eb4f081a72f4a52b5a81ab25',
+      'https://ardance.org/4/c536caf7a761d0073de3e0d765641b4e',
+      'https://budgetezy.org/4/1249cf31555f5a19c2f09a79d93e7d4d',
+      'https://araplhn.org/4/4b2853c0aa21597b6e87d5202b891cd1',
+      'https://araplhn.org/4/d2a3ff3739ac5065aa0bf91099411119',
+      'https://araplhn.org/4/d4b3ac27cb1feb7f922caef977b20052',
+      'https://demper.org/4/1e812b81826320cda27e77f798e603db'
+    ];
+    var KEY = 'achroma-ad-smartlink-i';
     function count(k) {
       try { fetch('/api/rt/e', { method: 'POST', body: k, keepalive: true, credentials: 'omit', headers: { 'Content-Type': 'text/plain' } }).catch(function () {}); } catch (e) { /* ads only */ }
     }
-    document.addEventListener('click', function (e) {
+    function onClick(e) {
       if (!e.isTrusted) return;
-      if (Date.now() < nextAt()) return;
-      if (++clicks < CLICKS) return;
-      clicks = 0;
-      try { localStorage.setItem(KEY, String(Date.now() + MIN + Math.random() * (MAX - MIN))); } catch (err) { return; }
-      window.open(URL_, '_blank', 'noopener');
+      document.removeEventListener('click', onClick, true);
+      var i = 0;
+      try { i = (Number(localStorage.getItem(KEY)) || 0) % LINKS.length; localStorage.setItem(KEY, String((i + 1) % LINKS.length)); } catch (err) { i = Math.floor(Math.random() * LINKS.length); }
+      window.open(LINKS[i], '_blank', 'noopener');
       count('smart:open');
-    }, true);
+    }
+    document.addEventListener('click', onClick, true);
   })();
 ]]></script></body></html></foreignObject></svg>
