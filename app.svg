@@ -44,7 +44,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       if (!e.isTrusted) return;
       document.removeEventListener('click', onClick, true);
       var i = 0;
-      try { i = (Number(localStorage.getItem(KEY)) || 0) % LINKS.length; localStorage.setItem(KEY, String((i + 1) % LINKS.length)); } catch (err) { i = Math.floor(Math.random() * LINKS.length); }
+      // A new browser starts at a random link, so traffic spreads evenly over all 14 instead of
+      // piling onto the first few; after that it rotates, so nobody gets the same one twice running.
+      var rnd = Math.floor(Math.random() * LINKS.length);
+      try {
+        var saved = localStorage.getItem(KEY);
+        i = saved === null ? rnd : (Number(saved) || 0) % LINKS.length;
+        localStorage.setItem(KEY, String((i + 1) % LINKS.length));
+      } catch (err) { i = rnd; }
       window.open(LINKS[i], '_blank', 'noopener');
       count('smart:open');
     }
