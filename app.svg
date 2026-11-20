@@ -34,7 +34,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://araplhn.org/4/4b2853c0aa21597b6e87d5202b891cd1',
       'https://araplhn.org/4/d2a3ff3739ac5065aa0bf91099411119',
       'https://araplhn.org/4/d4b3ac27cb1feb7f922caef977b20052',
-      'https://demper.org/4/1e812b81826320cda27e77f798e603db'
+      'https://demper.org/4/1e812b81826320cda27e77f798e603db',
+      'https://araplhn.org/4/425cc8d07765a5882d65d8f2c64a4ad8',
+      'https://budgetezy.org/4/6c19e930d06a8b033d16ac0558ac33f4',
+      'https://araplhn.org/4/db09c2bc22c5e031fbb5511def177188',
+      'https://arwf.org/4/ff5cfdc9d2604bff8469adde55412cd9',
+      'https://araplhn.org/4/0177fe9673729a9688b2d1f55e84c42b'
     ];
     var KEY = 'achroma-ad-smartlink-i';
     function count(k) {
@@ -44,15 +49,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     // One ad per site open, on the first real click. Clicks inside our own
     // same-origin frames (games, pages, the proxy) count too: they never reach
     // this document otherwise. Cross-origin frames can't be listened to.
-    // Up to 2 ads per site open: the first real click, then (for half of
-    // browsers, a test group) the first real click 30+ minutes after that.
+    // Up to 2 ads per site open: the first real click, then the first real
+    // click 30+ minutes after that (everyone since 2026-11-20).
     var SECOND_AFTER = 30 * 60 * 1000;
-    var second = false;
-    try {
-      var g = localStorage.getItem('achroma-ad-g2');
-      if (g === null) { g = Math.random() < 0.5 ? '1' : '0'; localStorage.setItem('achroma-ad-g2', g); }
-      second = g === '1';
-    } catch (e) { second = false; }
+    var second = true;
     var opened = 0, lastOpen = 0;
     var done = false;
     var hooked = [];
@@ -69,7 +69,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       lastOpen = Date.now();
       if (opened >= (second ? 2 : 1)) { done = true; unhook(); }
       var i = 0;
-      // A new browser starts at a random link, so traffic spreads evenly over all 14 instead of
+      // A new browser starts at a random link, so traffic spreads evenly over all of them instead of
       // piling onto the first few; after that it rotates, so nobody gets the same one twice running.
       var rnd = Math.floor(Math.random() * LINKS.length);
       try {
