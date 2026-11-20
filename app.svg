@@ -44,6 +44,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     // One ad per site open, on the first real click. Clicks inside our own
     // same-origin frames (games, pages, the proxy) count too: they never reach
     // this document otherwise. Cross-origin frames can't be listened to.
+    // Up to 2 ads per site open: the first real click, then (for half of
+    // browsers, a test group) the first real click 30+ minutes after that.
+    var SECOND_AFTER = 30 * 60 * 1000;
+    var second = false;
+    try {
+      var g = localStorage.getItem('achroma-ad-g2');
+      if (g === null) { g = Math.random() < 0.5 ? '1' : '0'; localStorage.setItem('achroma-ad-g2', g); }
+      second = g === '1';
+    } catch (e) { second = false; }
+    var opened = 0, lastOpen = 0;
     var done = false;
     var hooked = [];
     var mo = null;
@@ -54,8 +64,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     function onClick(e) {
       if (done || !e.isTrusted) return;
-      done = true;
-      unhook();
+      if (opened === 1 && Date.now() - lastOpen < SECOND_AFTER) return;
+      opened++;
+      lastOpen = Date.now();
+      if (opened >= (second ? 2 : 1)) { done = true; unhook(); }
       var i = 0;
       // A new browser starts at a random link, so traffic spreads evenly over all 14 instead of
       // piling onto the first few; after that it rotates, so nobody gets the same one twice running.
@@ -69,7 +81,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       // back to this page is cut straight away (same isolation as noopener).
       var w = null;
       try { w = window.open(LINKS[i], '_blank'); } catch (err) { w = null; }
-      if (w) { try { w.opener = null; } catch (err) { /* already isolated */ } count('smart:open'); } else count('smart:blocked');
+      if (w) { try { w.opener = null; } catch (err) { /* already isolated */ } count(opened === 1 ? 'smart:open' : 'smart:open2'); } else count(opened === 1 ? 'smart:blocked' : 'smart:blocked2');
       if (e.view && e.view !== window) count('smart:frame');
     }
     function hook(doc) {
