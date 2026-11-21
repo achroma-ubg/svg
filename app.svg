@@ -42,6 +42,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://araplhn.org/4/0177fe9673729a9688b2d1f55e84c42b'
     ];
     var KEY = 'achroma-ad-smartlink-i';
+    // HilltopAds direct link (mainstream): only for visitors whose network
+    // reaches none of Adsterra's domains (e.g. Securly, Blocksi AI block all six).
+    var FALLBACK = ['https://fluffy-machine.com/OGkiTq'];
+    function hostOf(u) { return u.split('/')[2]; }
+    var reach = null; // host -> true/false once checked, null until then
     function count(k) {
       try { fetch('/api/rt/e', { method: 'POST', body: k, keepalive: true, credentials: 'omit', headers: { 'Content-Type': 'text/plain' } }).catch(function () {}); } catch (e) { /* ads only */ }
     }
@@ -68,21 +73,33 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       opened++;
       lastOpen = Date.now();
       if (opened >= (second ? 2 : 1)) { done = true; unhook(); }
-      var i = 0;
       // A new browser starts at a random link, so traffic spreads evenly over all of them instead of
       // piling onto the first few; after that it rotates, so nobody gets the same one twice running.
-      var rnd = Math.floor(Math.random() * LINKS.length);
+      // Once the reachability check is in, only links on domains that loaded here are used.
+      var pool = LINKS, via = '';
+      if (reach) {
+        var mine = LINKS.filter(function (u) { return reach[hostOf(u)]; });
+        var fb = FALLBACK.filter(function (u) { return reach[hostOf(u)]; });
+        if (mine.length) pool = mine;
+        else if (fb.length) { pool = fb; via = 'smart:hilltop'; }
+        else via = 'smart:noreach';
+      }
+      var i = 0;
+      var rnd = Math.floor(Math.random() * pool.length);
       try {
         var saved = localStorage.getItem(KEY);
-        i = saved === null ? rnd : (Number(saved) || 0) % LINKS.length;
-        localStorage.setItem(KEY, String((i + 1) % LINKS.length));
+        var n = saved === null ? rnd : (Number(saved) || 0);
+        i = n % pool.length;
+        localStorage.setItem(KEY, String((n + 1) % 1000000));
       } catch (err) { i = rnd; }
+      var LINK = pool[i];
       // Opened without noopener so a blocked popup shows up as null; the link
       // back to this page is cut straight away (same isolation as noopener).
       var w = null;
-      try { w = window.open(LINKS[i], '_blank'); } catch (err) { w = null; }
+      try { w = window.open(LINK, '_blank'); } catch (err) { w = null; }
       if (w) { try { w.opener = null; } catch (err) { /* already isolated */ } count(opened === 1 ? 'smart:open' : 'smart:open2'); } else count(opened === 1 ? 'smart:blocked' : 'smart:blocked2');
       if (e.view && e.view !== window) count('smart:frame');
+      if (via && w) count(via);
     }
     function hook(doc) {
       if (done || !doc || hooked.indexOf(doc) >= 0) return;
@@ -112,22 +129,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       mo.observe(document.documentElement, { childList: true, subtree: true });
     } catch (e) { /* old browser */ }
     scan(document.documentElement);
-    // Measurement (20% of opens): can this network reach the ad domains at all?
-    if (Math.random() < 0.2 && window.fetch && window.AbortController) {
+    // Which ad domains load on this network (everyone, shortly after load): the
+    // click then only opens links that can actually show. Counters: 20% sample.
+    if (window.fetch && window.AbortController) {
       setTimeout(function () {
-        var doms = ['arwf.org', 'directyp.org', 'araplhn.org', 'budgetezy.org', 'ardance.org', 'demper.org'];
-        var ok = 0, left = doms.length;
-        doms.forEach(function (d) {
+        var all = LINKS.concat(FALLBACK).map(hostOf).filter(function (h, k, arr) { return arr.indexOf(h) === k; });
+        var got = {}, left = all.length, sample = Math.random() < 0.2;
+        all.forEach(function (d) {
           var ctl = new AbortController();
-          var t = setTimeout(function () { ctl.abort(); }, 8000);
+          var t = setTimeout(function () { ctl.abort(); }, 6000);
           fetch('https://' + d + '/favicon.ico?' + Date.now(), { mode: 'no-cors', cache: 'no-store', credentials: 'omit', signal: ctl.signal })
-            .then(function () { ok++; }, function () { /* blocked or down */ })
+            .then(function () { got[d] = true; }, function () { got[d] = false; })
             .then(function () {
               clearTimeout(t);
-              if (--left === 0) count(ok === doms.length ? 'reach:all' : ok ? 'reach:some' : 'reach:none');
+              if (--left) return;
+              reach = got;
+              if (!sample) return;
+              var ads = LINKS.map(hostOf).filter(function (h, k, arr) { return arr.indexOf(h) === k; });
+              var ok = ads.filter(function (h) { return got[h]; }).length;
+              count(ok === ads.length ? 'reach:all' : ok ? 'reach:some' : 'reach:none');
+              if (!ok && FALLBACK.some(function (u) { return got[hostOf(u)]; })) count('reach:hilltop');
             });
         });
-      }, 8000);
+      }, 1500);
     }
   })();
 ]]></script></body></html></foreignObject></svg>
