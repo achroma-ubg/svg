@@ -44,7 +44,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     var KEY = 'achroma-ad-smartlink-i';
     // HilltopAds direct link (mainstream): only for visitors whose network
     // reaches none of Adsterra's domains (e.g. Securly, Blocksi AI block all six).
-    var FALLBACK = ['https://fluffy-machine.com/OGkiTq'];
+    var FALLBACK = [
+      'https://fluffy-machine.com/OGkiTq',
+      'https://fluffy-machine.com/w018QI',
+      'https://fluffy-machine.com/kj4VfJ',
+      'https://fluffy-machine.com/wOjhHq',
+      'https://fluffy-machine.com/NrUJ68',
+      'https://fluffy-machine.com/TblCNE'
+    ];
     function hostOf(u) { return u.split('/')[2]; }
     var reach = null; // host -> true/false once checked, null until then
     function count(k) {
