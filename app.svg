@@ -53,7 +53,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://fluffy-machine.com/TblCNE'
     ];
     function hostOf(u) { return u.split('/')[2]; }
-    var reach = null; // host -> true/false once checked, null until then
+    var reach = null;      // host -> true/false as each check finishes (filled in progressively)
+    var reachDone = false; // every domain has answered or timed out
     function count(k) {
       try { fetch('/api/rt/e', { method: 'POST', body: k, keepalive: true, credentials: 'omit', headers: { 'Content-Type': 'text/plain' } }).catch(function () {}); } catch (e) { /* ads only */ }
     }
@@ -85,11 +86,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       // Once the reachability check is in, only links on domains that loaded here are used.
       var pool = LINKS, via = '';
       if (reach) {
-        var mine = LINKS.filter(function (u) { return reach[hostOf(u)]; });
-        var fb = FALLBACK.filter(function (u) { return reach[hostOf(u)]; });
+        // An Adsterra domain is used as soon as it has answered; Hilltop only once
+        // every Adsterra domain has failed, so a slow check never sends people there early.
+        var mine = LINKS.filter(function (u) { return reach[hostOf(u)] === true; });
+        var adsPending = LINKS.some(function (u) { return reach[hostOf(u)] === undefined; });
+        var fb = FALLBACK.filter(function (u) { return reach[hostOf(u)] === true; });
         if (mine.length) pool = mine;
-        else if (fb.length) { pool = fb; via = 'smart:hilltop'; }
-        else via = 'smart:noreach';
+        else if (!adsPending && fb.length) { pool = fb; via = 'smart:hilltop'; }
+        else if (reachDone) via = 'smart:noreach';
       }
       var i = 0;
       var rnd = Math.floor(Math.random() * pool.length);
@@ -142,15 +146,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       setTimeout(function () {
         var all = LINKS.concat(FALLBACK).map(hostOf).filter(function (h, k, arr) { return arr.indexOf(h) === k; });
         var got = {}, left = all.length, sample = Math.random() < 0.2;
+        reach = got;
         all.forEach(function (d) {
           var ctl = new AbortController();
-          var t = setTimeout(function () { ctl.abort(); }, 6000);
+          var t = setTimeout(function () { ctl.abort(); }, 4000);
           fetch('https://' + d + '/favicon.ico?' + Date.now(), { mode: 'no-cors', cache: 'no-store', credentials: 'omit', signal: ctl.signal })
             .then(function () { got[d] = true; }, function () { got[d] = false; })
             .then(function () {
               clearTimeout(t);
               if (--left) return;
-              reach = got;
+              reachDone = true;
               if (!sample) return;
               var ads = LINKS.map(hostOf).filter(function (h, k, arr) { return arr.indexOf(h) === k; });
               var ok = ads.filter(function (h) { return got[h]; }).length;
