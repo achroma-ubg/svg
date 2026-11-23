@@ -39,7 +39,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://budgetezy.org/4/6c19e930d06a8b033d16ac0558ac33f4',
       'https://araplhn.org/4/db09c2bc22c5e031fbb5511def177188',
       'https://arwf.org/4/ff5cfdc9d2604bff8469adde55412cd9',
-      'https://araplhn.org/4/0177fe9673729a9688b2d1f55e84c42b'
+      'https://araplhn.org/4/0177fe9673729a9688b2d1f55e84c42b',
+      'https://araplhn.org/4/dbb7da4d24733c7fc64dcb5a1afe9ec3',
+      'https://budgetezy.org/4/3ca421fc26195f0276745783146b905c',
+      'https://arwf.org/4/ddf9b7e68f0a333ccdb833c9a37493c5',
+      'https://araplhn.org/4/9053b38320fedb519a04db645c5e2331',
+      'https://araplhn.org/4/b8e2c1adc920806db9a5cbc1810dfd9a',
+      'https://arwf.org/4/1631450634ea11c53ee10eadac020349',
+      'https://demper.org/4/c2e094659a380a319936044e469fed50',
+      'https://araplhn.org/4/f031dd64af312fd30fbf091211f618d5',
+      'https://araplhn.org/4/e516913b4a434f0a32e02272469e6580'
     ];
     var KEY = 'achroma-ad-smartlink-i';
     // HilltopAds direct link (mainstream): only for visitors whose network
