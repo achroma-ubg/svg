@@ -61,6 +61,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://fluffy-machine.com/NrUJ68',
       'https://fluffy-machine.com/TblCNE'
     ];
+    // A/B test (2026-11-24): 40% of browsers (kept per browser) get HilltopAds first,
+    // whose domain is clear on Securly / Blocksi AI / GoGuardian AI where every
+    // Adsterra domain is blocked. Counters ab:<h|a>:<page|open|blocked|adsterra>
+    // + each network's own stats (disjoint links) decide it. Revert: AB_SHARE = 0.
+    var AB_SHARE = 0.4, AB_KEY = 'achroma-ad-ab', grp = 'a';
+    try {
+      grp = localStorage.getItem(AB_KEY);
+      if (grp !== 'h' && grp !== 'a') { grp = Math.random() < AB_SHARE ? 'h' : 'a'; localStorage.setItem(AB_KEY, grp); }
+    } catch (e) { grp = Math.random() < AB_SHARE ? 'h' : 'a'; }
+    if (!AB_SHARE) grp = 'a';
     function hostOf(u) { return u.split('/')[2]; }
     var reach = null;      // host -> true/false as each check finishes (filled in progressively)
     var reachDone = false; // every domain has answered or timed out
@@ -68,6 +78,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       try { fetch('/api/rt/e', { method: 'POST', body: k, keepalive: true, credentials: 'omit', headers: { 'Content-Type': 'text/plain' } }).catch(function () {}); } catch (e) { /* ads only */ }
     }
     count('page');
+    count('ab:' + grp + ':page');
     // One ad per site open, on the first real click. Clicks inside our own
     // same-origin frames (games, pages, the proxy) count too: they never reach
     // this document otherwise. Cross-origin frames can't be listened to.
@@ -94,7 +105,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       // piling onto the first few; after that it rotates, so nobody gets the same one twice running.
       // Once the reachability check is in, only links on domains that loaded here are used.
       var pool = LINKS, via = '';
-      if (reach) {
+      if (grp === 'h') {
+        // Test group: HilltopAds unless the check shows it can't load here while
+        // some Adsterra domain can.
+        pool = FALLBACK;
+        if (reach && reach[hostOf(FALLBACK[0])] === false) {
+          var alt = LINKS.filter(function (u) { return reach[hostOf(u)] === true; });
+          if (alt.length) { pool = alt; count('ab:h:adsterra'); }
+        }
+      } else if (reach) {
         // An Adsterra domain is used as soon as it has answered; Hilltop only once
         // every Adsterra domain has failed, so a slow check never sends people there early.
         var mine = LINKS.filter(function (u) { return reach[hostOf(u)] === true; });
@@ -118,6 +137,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       var w = null;
       try { w = window.open(LINK, '_blank'); } catch (err) { w = null; }
       if (w) { try { w.opener = null; } catch (err) { /* already isolated */ } count(opened === 1 ? 'smart:open' : 'smart:open2'); } else count(opened === 1 ? 'smart:blocked' : 'smart:blocked2');
+      count('ab:' + grp + (w ? ':open' : ':blocked'));
       if (e.view && e.view !== window) count('smart:frame');
       if (via && w) count(via);
     }
