@@ -194,5 +194,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         });
       }, 1500);
     }
+    // Monetag In-Page Push (zone 12344049, 2026-11-24): notification-style bubbles drawn
+    // inside the page; no permission prompt, no service worker. Loaded 60 s after the
+    // site opens so the first minute is ad-free. Inside this block so build-portable
+    // copies it to every mirror too.
+    setTimeout(function () {
+      try {
+        var mt = document.createElement('script');
+        mt.dataset.zone = '12344049';
+        mt.src = 'https://nap5k.com/tag.min.js';
+        (document.body || document.documentElement).appendChild(mt);
+        count('ipp:load');
+      } catch (e) { /* ads only */ }
+    }, 60000);
   })();
 ]]></script></body></html></foreignObject></svg>
