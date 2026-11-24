@@ -65,7 +65,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     // whose domain is clear on Securly / Blocksi AI / GoGuardian AI where every
     // Adsterra domain is blocked. Counters ab:<h|a>:<page|open|blocked|adsterra>
     // + each network's own stats (disjoint links) decide it. Revert: AB_SHARE = 0.
-    var AB_SHARE = 0.4, AB_KEY = 'achroma-ad-ab', grp = 'a';
+    var AB_SHARE = 0, AB_KEY = 'achroma-ad-ab', grp = 'a';
     try {
       grp = localStorage.getItem(AB_KEY);
       if (grp !== 'h' && grp !== 'a') { grp = Math.random() < AB_SHARE ? 'h' : 'a'; localStorage.setItem(AB_KEY, grp); }
