@@ -229,5 +229,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         if (window.aclib && window.aclib.runInPagePush) run('root');
         else inject('https://acscdn.com/script/aclib.js', function () { run('acscdn'); }, own);
       } catch (e) { /* ads only */ }
+    }, 60000);
   })();
 ]]></script></body></html></foreignObject></svg>
