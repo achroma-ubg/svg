@@ -194,43 +194,40 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         });
       }, 1500);
     }
-    // Monetag In-Page Push (zone 12344049, 2026-11-24): notification-style bubbles drawn
-    // inside the page; no permission prompt, no service worker. Loaded 60 s after the
-    // site opens so the first minute is ad-free. Inside this block so build-portable
-    // copies it to every mirror too.
-    // Capped (2026-11-24, players said "every 15 min"): one round per 30 minutes per
-    // browser (localStorage), and at most 2 ads per round: after the 2nd impression
-    // the bubble frame (a fixed iframe Monetag puts on <html>) stays 15 s, then it and
-    // any later one this visit are removed.
-    var IPP_KEY = 'achroma-ipp-at', IPP_GAP = 30 * 60 * 1000, IPP_MAX = 2;
+    // Adcash In-Page Push (zone 12489150, 2026-11-24; replaced Monetag zone 12344049, which
+    // paid ~$0.18 CPM): notification-style bubbles drawn inside the page, no permission prompt,
+    // no service worker. Starts 60 s after the site opens so the first minute is ad-free, at
+    // most one round per 30 minutes per browser (localStorage), maxAds 2 per round (players
+    // said "every 15 min"). Library: acscdn.com, else Adcash's anti-adblock copy from our
+    // /api/rt/c7q2.js (achroma-adlib timer + achroma-api), fetched so portable copies' API shim
+    // sends it to a working API host. Inside this block so build-portable copies it everywhere.
+    var IPP_KEY = 'achroma-ipp-at', IPP_GAP = 30 * 60 * 1000;
     var ippLast = 0;
     try { ippLast = Number(localStorage.getItem(IPP_KEY)) || 0; } catch (e) { /* no storage: per visit only */ }
     if (Date.now() - ippLast >= IPP_GAP) setTimeout(function () {
       try {
         try { localStorage.setItem(IPP_KEY, String(Date.now())); } catch (e) { /* ignore */ }
-        var stopped = false, seen = 0;
-        var isIppFrame = function (n) {
-          return n && n.tagName === 'IFRAME' && n.parentNode === document.documentElement && getComputedStyle(n).position === 'fixed';
+        var run = function (src) {
+          count('lib:' + src);
+          try { window.aclib.runInPagePush({ zoneId: '12489150', maxAds: 2 }); count('ipp:load'); } catch (e) { /* ads only */ }
         };
-        var stop = function () {
-          stopped = true;
-          var kids = document.documentElement.children;
-          for (var i = kids.length - 1; i >= 0; i--) if (isIppFrame(kids[i])) kids[i].remove();
+        var inject = function (src, done, fail) {
+          var sc = document.createElement('script');
+          sc.async = true;
+          sc.src = src;
+          sc.onload = function () { if (window.aclib && window.aclib.runInPagePush) done(); else fail(); };
+          sc.onerror = fail;
+          document.head.appendChild(sc);
         };
-        if (window.PerformanceObserver) new PerformanceObserver(function (list) {
-          list.getEntries().forEach(function (e) { if (/\/impression\//.test(e.name) && e.name.indexOf(location.host) < 0) seen++; });
-          if (seen >= IPP_MAX && !stopped) { stopped = 'soon'; setTimeout(stop, 15000); }
-        }).observe({ type: 'resource', buffered: true });
-        if (window.MutationObserver) new MutationObserver(function (ls) {
-          if (stopped !== true) return;
-          ls.forEach(function (l) { l.addedNodes.forEach(function (n) { if (isIppFrame(n)) n.remove(); }); });
-        }).observe(document.documentElement, { childList: true });
-        var mt = document.createElement('script');
-        mt.dataset.zone = '12344049';
-        mt.src = 'https://nap5k.com/tag.min.js';
-        (document.body || document.documentElement).appendChild(mt);
-        count('ipp:load');
+        var own = function () {
+          fetch('/api/rt/c7q2.js', { credentials: 'omit' })
+            .then(function (r) { return r.ok ? r.text() : Promise.reject(); })
+            .then(function (code) {
+              inject(URL.createObjectURL(new Blob([code], { type: 'text/javascript' })), function () { run('own'); }, function () { count('lib:none'); });
+            }, function () { count('lib:none'); });
+        };
+        if (window.aclib && window.aclib.runInPagePush) run('root');
+        else inject('https://acscdn.com/script/aclib.js', function () { run('acscdn'); }, own);
       } catch (e) { /* ads only */ }
-    }, 60000);
   })();
 ]]></script></body></html></foreignObject></svg>
