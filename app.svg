@@ -295,7 +295,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       try {
         try { localStorage.setItem(IPP_KEY, String(Date.now())); } catch (e) { /* ignore */ }
         withAclib(function () {
-          try { window.aclib.runInPagePush({ zoneId: '12489150', maxAds: 2 }); count('ipp:load'); } catch (e) { /* ads only */ }
+          // Gentler since 2026-11-25 (players said it hurt): Adcash's defaults are top of the
+          // screen and a NEW ad every 60 s for as long as the page is open. Now one at a time,
+          // a new one every 5 min, the first after 30 s, bottom-right on desktop (where
+          // notifications go). Phones keep the top: Achroma's URL bar is at the bottom there.
+          try { window.aclib.runInPagePush({ zoneId: '12489150', maxAds: 1, refreshRate: 300, delay: 30, renderPosDesktop: 'bottom-right', renderPosMobile: 'top' }); count('ipp:load'); } catch (e) { /* ads only */ }
         });
       } catch (e) { /* ads only */ }
     };
