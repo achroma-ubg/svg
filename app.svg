@@ -116,7 +116,56 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       };
       inject('https://acscdn.com/script/aclib.js', function () { ready('acscdn'); }, own);
     }
-    if (net === 'c') withAclib(function () { window.aclib.runPop({ zoneId: '12489270' }); count('pop:load'); });
+    // Our own 1-per-30-min gate for the Adcash popunder (2026-11-25). Adcash's dashboard cap is
+    // decided by its ad server per ZONE and per fingerprint, and the anti-adblock copy serves from
+    // sub-zones (12489272/4/6) with their own count, so reloads could pop again within 30 min.
+    // The library opens its popunder with window.open taken from a hidden iframe it makes
+    // (iframe.contentWindow.open.bind(...)), so frames' open() is wrapped as they are read:
+    // a call coming from the library's code (acscdn.com, or our blob: copy) is recorded, and
+    // refused if the last one was under 30 min ago. Our own code's open() calls pass untouched.
+    // runPop works once per page (aclib refuses a second call), so a page opened inside the gap
+    // arms it when the gap ends. Counters: pop:shown, pop:held.
+    var POP_KEY = 'achroma-pop-at', POP_GAP = 30 * 60 * 1000, popArmed = false, popMem = 0;
+    var popLast = function () { var v = popMem; try { v = Math.max(v, Number(localStorage.getItem(POP_KEY)) || 0); } catch (e) { /* memory only */ } return v; };
+    var fromAclib = function () { try { return /acscdn\.com|\bblob:/.test(new Error().stack || ''); } catch (e) { return false; } };
+    var wrapOpen = function (w) {
+      try {
+        if (!w || w.__achromaOpen) return;
+        var orig = w.open;
+        var gated = function () {
+          if (fromAclib()) {
+            if (Date.now() - popLast() < POP_GAP) { count('pop:held'); return null; }
+            popMem = Date.now();
+            try { localStorage.setItem(POP_KEY, String(popMem)); } catch (e) { /* memory only */ }
+            count('pop:shown');
+          }
+          return orig.apply(this, arguments);
+        };
+        try { gated.toString = function () { return 'function open() { [native code] }'; }; } catch (e) { /* ignore */ }
+        w.open = gated;
+        w.__achromaOpen = 1;
+      } catch (e) { /* cross-origin frame: not the library's */ }
+    };
+    var popArm = function () {
+      if (popArmed) return;
+      popArmed = true;
+      wrapOpen(window);
+      try {
+        var cw = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'contentWindow');
+        if (cw && cw.get && cw.configurable) {
+          Object.defineProperty(HTMLIFrameElement.prototype, 'contentWindow', {
+            configurable: true, enumerable: cw.enumerable,
+            get: function () { var w = cw.get.call(this); wrapOpen(w); return w; },
+          });
+        }
+      } catch (e) { /* old browser: Adcash's own cap only */ }
+      withAclib(function () { window.aclib.runPop({ zoneId: '12489270' }); count('pop:load'); });
+    };
+    if (net === 'c') {
+      var popWait = POP_GAP - (Date.now() - popLast());
+      if (popWait <= 0) popArm();
+      else setTimeout(function () { if (Date.now() - popLast() >= POP_GAP) popArm(); }, popWait);
+    }
     // One ad per site open, on the first real click. Clicks inside our own
     // same-origin frames (games, pages, the proxy) count too: they never reach
     // this document otherwise. Cross-origin frames can't be listened to.
