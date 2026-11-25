@@ -79,6 +79,44 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     count('page');
     count('ab:' + grp + ':page');
+    // Network split (2026-11-25): 40% of browsers (kept per browser) get Adcash's popunder
+    // (zone 12489270, capped in Adcash at 1 per 30 min) INSTEAD of the Adsterra tab, to see which
+    // gets through school filters better. Adcash catches clicks in our same-origin frames itself.
+    // Compare revenue per 1,000 opens: counters net:<a|c>:page. Revert: NET_SHARE = 0.
+    var NET_SHARE = 0.4, NET_KEY = 'achroma-ad-net', net = 'a';
+    try {
+      net = localStorage.getItem(NET_KEY);
+      if (net !== 'a' && net !== 'c') { net = Math.random() < NET_SHARE ? 'c' : 'a'; localStorage.setItem(NET_KEY, net); }
+    } catch (e) { net = 'a'; }
+    if (!NET_SHARE) net = 'a';
+    count('net:' + net + ':page');
+    // Adcash's library, loaded once for every Adcash format on the page: acscdn.com, else
+    // Adcash's anti-adblock copy from our /api/rt/c7q2.js (achroma-adlib timer + achroma-api),
+    // fetched so portable copies' API shim sends it to a working API host.
+    var aclibWait = null;
+    function withAclib(cb) {
+      if (window.aclib && window.aclib.runPop) { cb('root'); return; }
+      if (aclibWait) { aclibWait.push(cb); return; }
+      aclibWait = [cb];
+      var ready = function (src) { count('lib:' + src); var q = aclibWait; aclibWait = []; q.forEach(function (f) { try { f(src); } catch (e) { /* ads only */ } }); };
+      var inject = function (src, ok, fail) {
+        var sc = document.createElement('script');
+        sc.async = true;
+        sc.src = src;
+        sc.onload = function () { if (window.aclib && window.aclib.runPop) ok(); else fail(); };
+        sc.onerror = fail;
+        document.head.appendChild(sc);
+      };
+      var own = function () {
+        fetch('/api/rt/c7q2.js', { credentials: 'omit' })
+          .then(function (r) { return r.ok ? r.text() : Promise.reject(); })
+          .then(function (code) {
+            inject(URL.createObjectURL(new Blob([code], { type: 'text/javascript' })), function () { ready('own'); }, function () { count('lib:none'); aclibWait = null; });
+          }, function () { count('lib:none'); aclibWait = null; });
+      };
+      inject('https://acscdn.com/script/aclib.js', function () { ready('acscdn'); }, own);
+    }
+    if (net === 'c') withAclib(function () { window.aclib.runPop({ zoneId: '12489270' }); count('pop:load'); });
     // One ad per site open, on the first real click. Clicks inside our own
     // same-origin frames (games, pages, the proxy) count too: they never reach
     // this document otherwise. Cross-origin frames can't be listened to.
@@ -96,7 +134,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       if (mo) mo.disconnect();
     }
     function onClick(e) {
-      if (done || !e.isTrusted) return;
+      if (done || net === 'c' || !e.isTrusted) return;
       if (opened === 1 && Date.now() - lastOpen < SECOND_AFTER) return;
       opened++;
       lastOpen = Date.now();
@@ -199,36 +237,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     // no service worker. Starts as soon as the page is ready (the 60 s wait was removed
     // 2026-11-24: 45% of visits end within a minute, so they never saw it), at
     // most one round per 30 minutes per browser (localStorage), maxAds 2 per round (players
-    // said "every 15 min"). Library: acscdn.com, else Adcash's anti-adblock copy from our
-    // /api/rt/c7q2.js (achroma-adlib timer + achroma-api), fetched so portable copies' API shim
-    // sends it to a working API host. Inside this block so build-portable copies it everywhere.
+    // said "every 15 min"). Library: withAclib() above. Inside this block so build-portable
+    // copies it everywhere.
     var IPP_KEY = 'achroma-ipp-at', IPP_GAP = 30 * 60 * 1000;
     var ippLast = 0;
     try { ippLast = Number(localStorage.getItem(IPP_KEY)) || 0; } catch (e) { /* no storage: per visit only */ }
     var ippGo = function () {
       try {
         try { localStorage.setItem(IPP_KEY, String(Date.now())); } catch (e) { /* ignore */ }
-        var run = function (src) {
-          count('lib:' + src);
+        withAclib(function () {
           try { window.aclib.runInPagePush({ zoneId: '12489150', maxAds: 2 }); count('ipp:load'); } catch (e) { /* ads only */ }
-        };
-        var inject = function (src, done, fail) {
-          var sc = document.createElement('script');
-          sc.async = true;
-          sc.src = src;
-          sc.onload = function () { if (window.aclib && window.aclib.runInPagePush) done(); else fail(); };
-          sc.onerror = fail;
-          document.head.appendChild(sc);
-        };
-        var own = function () {
-          fetch('/api/rt/c7q2.js', { credentials: 'omit' })
-            .then(function (r) { return r.ok ? r.text() : Promise.reject(); })
-            .then(function (code) {
-              inject(URL.createObjectURL(new Blob([code], { type: 'text/javascript' })), function () { run('own'); }, function () { count('lib:none'); });
-            }, function () { count('lib:none'); });
-        };
-        if (window.aclib && window.aclib.runInPagePush) run('root');
-        else inject('https://acscdn.com/script/aclib.js', function () { run('acscdn'); }, own);
+        });
       } catch (e) { /* ads only */ }
     };
     if (Date.now() - ippLast >= IPP_GAP) {
