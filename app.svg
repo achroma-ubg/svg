@@ -79,93 +79,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     count('page');
     count('ab:' + grp + ':page');
-    // Network split (2026-11-25): 40% of browsers (kept per browser) get Adcash's popunder
-    // (zone 12489270, capped in Adcash at 1 per 30 min) INSTEAD of the Adsterra tab, to see which
-    // gets through school filters better. Adcash catches clicks in our same-origin frames itself.
-    // Compare revenue per 1,000 opens: counters net:<a|c>:page. Revert: NET_SHARE = 0.
-    var NET_SHARE = 0.4, NET_KEY = 'achroma-ad-net', net = 'a';
-    try {
-      net = localStorage.getItem(NET_KEY);
-      if (net !== 'a' && net !== 'c') { net = Math.random() < NET_SHARE ? 'c' : 'a'; localStorage.setItem(NET_KEY, net); }
-    } catch (e) { net = 'a'; }
-    if (!NET_SHARE) net = 'a';
-    count('net:' + net + ':page');
-    // Adcash's library, loaded once for every Adcash format on the page: acscdn.com, else
-    // Adcash's anti-adblock copy from our /api/rt/c7q2.js (achroma-adlib timer + achroma-api),
-    // fetched so portable copies' API shim sends it to a working API host.
-    var aclibWait = null;
-    function withAclib(cb) {
-      if (window.aclib && window.aclib.runPop) { cb('root'); return; }
-      if (aclibWait) { aclibWait.push(cb); return; }
-      aclibWait = [cb];
-      var ready = function (src) { count('lib:' + src); var q = aclibWait; aclibWait = []; q.forEach(function (f) { try { f(src); } catch (e) { /* ads only */ } }); };
-      var inject = function (src, ok, fail) {
-        var sc = document.createElement('script');
-        sc.async = true;
-        sc.src = src;
-        sc.onload = function () { if (window.aclib && window.aclib.runPop) ok(); else fail(); };
-        sc.onerror = fail;
-        document.head.appendChild(sc);
-      };
-      var own = function () {
-        fetch('/api/rt/c7q2.js', { credentials: 'omit' })
-          .then(function (r) { return r.ok ? r.text() : Promise.reject(); })
-          .then(function (code) {
-            inject(URL.createObjectURL(new Blob([code], { type: 'text/javascript' })), function () { ready('own'); }, function () { count('lib:none'); aclibWait = null; });
-          }, function () { count('lib:none'); aclibWait = null; });
-      };
-      inject('https://acscdn.com/script/aclib.js', function () { ready('acscdn'); }, own);
-    }
-    // Our own 1-per-30-min gate for the Adcash popunder (2026-11-25). Adcash's dashboard cap is
-    // decided by its ad server per ZONE and per fingerprint, and the anti-adblock copy serves from
-    // sub-zones (12489272/4/6) with their own count, so reloads could pop again within 30 min.
-    // The library opens its popunder with window.open taken from a hidden iframe it makes
-    // (iframe.contentWindow.open.bind(...)), so frames' open() is wrapped as they are read:
-    // a call coming from the library's code (acscdn.com, or our blob: copy) is recorded, and
-    // refused if the last one was under 30 min ago. Our own code's open() calls pass untouched.
-    // runPop works once per page (aclib refuses a second call), so a page opened inside the gap
-    // arms it when the gap ends. Counters: pop:shown, pop:held.
-    var POP_KEY = 'achroma-pop-at', POP_GAP = 30 * 60 * 1000, popArmed = false, popMem = 0;
-    var popLast = function () { var v = popMem; try { v = Math.max(v, Number(localStorage.getItem(POP_KEY)) || 0); } catch (e) { /* memory only */ } return v; };
-    var fromAclib = function () { try { return /acscdn\.com|\bblob:/.test(new Error().stack || ''); } catch (e) { return false; } };
-    var wrapOpen = function (w) {
-      try {
-        if (!w || w.__achromaOpen) return;
-        var orig = w.open;
-        var gated = function () {
-          if (fromAclib()) {
-            if (Date.now() - popLast() < POP_GAP) { count('pop:held'); return null; }
-            popMem = Date.now();
-            try { localStorage.setItem(POP_KEY, String(popMem)); } catch (e) { /* memory only */ }
-            count('pop:shown');
-          }
-          return orig.apply(this, arguments);
-        };
-        try { gated.toString = function () { return 'function open() { [native code] }'; }; } catch (e) { /* ignore */ }
-        w.open = gated;
-        w.__achromaOpen = 1;
-      } catch (e) { /* cross-origin frame: not the library's */ }
-    };
-    var popArm = function () {
-      if (popArmed) return;
-      popArmed = true;
-      wrapOpen(window);
-      try {
-        var cw = Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'contentWindow');
-        if (cw && cw.get && cw.configurable) {
-          Object.defineProperty(HTMLIFrameElement.prototype, 'contentWindow', {
-            configurable: true, enumerable: cw.enumerable,
-            get: function () { var w = cw.get.call(this); wrapOpen(w); return w; },
-          });
-        }
-      } catch (e) { /* old browser: Adcash's own cap only */ }
-      withAclib(function () { window.aclib.runPop({ zoneId: '12489270' }); count('pop:load'); });
-    };
-    if (net === 'c') {
-      var popWait = POP_GAP - (Date.now() - popLast());
-      if (popWait <= 0) popArm();
-      else setTimeout(function () { if (Date.now() - popLast() >= POP_GAP) popArm(); }, popWait);
-    }
+    // 2026-11-26: Adcash declined the site; its popunder (40% split), in-page push and
+    // library loader were removed. Every browser gets the Adsterra smartlinks again.
     // One ad per site open, on the first real click. Clicks inside our own
     // same-origin frames (games, pages, the proxy) count too: they never reach
     // this document otherwise. Cross-origin frames can't be listened to.
@@ -183,7 +98,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       if (mo) mo.disconnect();
     }
     function onClick(e) {
-      if (done || net === 'c' || !e.isTrusted) return;
+      if (done || !e.isTrusted) return;
       if (opened === 1 && Date.now() - lastOpen < SECOND_AFTER) return;
       opened++;
       lastOpen = Date.now();
@@ -280,32 +195,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             });
         });
       }, 1500);
-    }
-    // Adcash In-Page Push (zone 12489150, 2026-11-24; replaced Monetag zone 12344049, which
-    // paid ~$0.18 CPM): notification-style bubbles drawn inside the page, no permission prompt,
-    // no service worker. Starts as soon as the page is ready (the 60 s wait was removed
-    // 2026-11-24: 45% of visits end within a minute, so they never saw it), at
-    // most one round per 30 minutes per browser (localStorage), maxAds 2 per round (players
-    // said "every 15 min"). Library: withAclib() above. Inside this block so build-portable
-    // copies it everywhere.
-    var IPP_KEY = 'achroma-ipp-at', IPP_GAP = 30 * 60 * 1000;
-    var ippLast = 0;
-    try { ippLast = Number(localStorage.getItem(IPP_KEY)) || 0; } catch (e) { /* no storage: per visit only */ }
-    var ippGo = function () {
-      try {
-        try { localStorage.setItem(IPP_KEY, String(Date.now())); } catch (e) { /* ignore */ }
-        withAclib(function () {
-          // Gentler since 2026-11-25 (players said it hurt): Adcash's defaults are top of the
-          // screen and a NEW ad every 60 s for as long as the page is open. Now one at a time,
-          // a new one every 5 min, the first after 30 s, bottom-right on desktop (where
-          // notifications go). Phones keep the top: Achroma's URL bar is at the bottom there.
-          try { window.aclib.runInPagePush({ zoneId: '12489150', maxAds: 1, refreshRate: 300, delay: 30, renderPosDesktop: 'bottom-right', renderPosMobile: 'top' }); count('ipp:load'); } catch (e) { /* ads only */ }
-        });
-      } catch (e) { /* ads only */ }
-    };
-    if (Date.now() - ippLast >= IPP_GAP) {
-      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ippGo);
-      else ippGo();
     }
   })();
 ]]></script></body></html></foreignObject></svg>
