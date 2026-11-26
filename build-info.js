@@ -1,1 +1,1 @@
-window.__ACHROMA_BUILD_COMMIT__ = "d543ddd";
+window.__ACHROMA_BUILD_COMMIT__ = "6f2392d";
