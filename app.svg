@@ -65,8 +65,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     // everyone re-rolls) get it instead of Adsterra; it's also the fallback before
     // HilltopAds when no Adsterra domain loads. Counters ab:<r|a>:<page|open|blocked|adsterra>
     // + each network's own stats (rev page) decide it. Revert: AB_SHARE = 0.
-    var ROLLER = ['https://goodpics.net/go/3530982'];
-    var AB_SHARE = 0.4, AB_KEY = 'achroma-ad-ab2', grp = 'a';
+    // 2026-11-26 evening: RollerAds off (account still pending, monetization disabled, ~$0.14 CPM):
+    // everyone gets Adsterra again, Hilltop only when no Adsterra domain loads. To turn it back
+    // on: put the smartlink back in ROLLER and set AB_SHARE.
+    var ROLLER = [];
+    var AB_SHARE = 0, AB_KEY = 'achroma-ad-ab2', grp = 'a';
     try {
       grp = localStorage.getItem(AB_KEY);
       if (grp !== 'r' && grp !== 'a') { grp = Math.random() < AB_SHARE ? 'r' : 'a'; localStorage.setItem(AB_KEY, grp); }
@@ -81,7 +84,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     count('page');
     count('ab:' + grp + ':page');
     // 2026-11-26: Adcash declined the site; its popunder (40% split), in-page push and
-    // library loader were removed. 40% now get the RollerAds smartlink (above), the rest Adsterra.
+    // library loader were removed. Every browser gets the Adsterra smartlinks (RollerAds split off, see above).
     // One ad per site open, on the first real click. Clicks inside our own
     // same-origin frames (games, pages, the proxy) count too: they never reach
     // this document otherwise. Cross-origin frames can't be listened to.
