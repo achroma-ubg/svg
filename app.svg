@@ -61,15 +61,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://fluffy-machine.com/NrUJ68',
       'https://fluffy-machine.com/TblCNE'
     ];
-    // A/B test (2026-11-24): 40% of browsers (kept per browser) get HilltopAds first,
-    // whose domain is clear on Securly / Blocksi AI / GoGuardian AI where every
-    // Adsterra domain is blocked. Counters ab:<h|a>:<page|open|blocked|adsterra>
-    // + each network's own stats (disjoint links) decide it. Revert: AB_SHARE = 0.
-    var AB_SHARE = 0, AB_KEY = 'achroma-ad-ab', grp = 'a';
+    // RollerAds smartlink (2026-11-26): 40% of browsers (kept per browser, new key so
+    // everyone re-rolls) get it instead of Adsterra; it's also the fallback before
+    // HilltopAds when no Adsterra domain loads. Counters ab:<r|a>:<page|open|blocked|adsterra>
+    // + each network's own stats (rev page) decide it. Revert: AB_SHARE = 0.
+    var ROLLER = ['https://goodpics.net/go/3530982'];
+    var AB_SHARE = 0.4, AB_KEY = 'achroma-ad-ab2', grp = 'a';
     try {
       grp = localStorage.getItem(AB_KEY);
-      if (grp !== 'h' && grp !== 'a') { grp = Math.random() < AB_SHARE ? 'h' : 'a'; localStorage.setItem(AB_KEY, grp); }
-    } catch (e) { grp = Math.random() < AB_SHARE ? 'h' : 'a'; }
+      if (grp !== 'r' && grp !== 'a') { grp = Math.random() < AB_SHARE ? 'r' : 'a'; localStorage.setItem(AB_KEY, grp); }
+    } catch (e) { grp = Math.random() < AB_SHARE ? 'r' : 'a'; }
     if (!AB_SHARE) grp = 'a';
     function hostOf(u) { return u.split('/')[2]; }
     var reach = null;      // host -> true/false as each check finishes (filled in progressively)
@@ -80,7 +81,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     count('page');
     count('ab:' + grp + ':page');
     // 2026-11-26: Adcash declined the site; its popunder (40% split), in-page push and
-    // library loader were removed. Every browser gets the Adsterra smartlinks again.
+    // library loader were removed. 40% now get the RollerAds smartlink (above), the rest Adsterra.
     // One ad per site open, on the first real click. Clicks inside our own
     // same-origin frames (games, pages, the proxy) count too: they never reach
     // this document otherwise. Cross-origin frames can't be listened to.
@@ -107,21 +108,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       // piling onto the first few; after that it rotates, so nobody gets the same one twice running.
       // Once the reachability check is in, only links on domains that loaded here are used.
       var pool = LINKS, via = '';
-      if (grp === 'h') {
-        // Test group: HilltopAds unless the check shows it can't load here while
+      if (grp === 'r') {
+        // Test group: RollerAds unless the check shows it can't load here while
         // some Adsterra domain can.
-        pool = FALLBACK;
-        if (reach && reach[hostOf(FALLBACK[0])] === false) {
+        pool = ROLLER;
+        if (reach && reach[hostOf(ROLLER[0])] === false) {
           var alt = LINKS.filter(function (u) { return reach[hostOf(u)] === true; });
-          if (alt.length) { pool = alt; count('ab:h:adsterra'); }
+          if (alt.length) { pool = alt; count('ab:r:adsterra'); }
         }
       } else if (reach) {
-        // An Adsterra domain is used as soon as it has answered; Hilltop only once
-        // every Adsterra domain has failed, so a slow check never sends people there early.
+        // An Adsterra domain is used as soon as it has answered; RollerAds, then
+        // Hilltop, only once every Adsterra domain has failed, so a slow check
+        // never sends people there early.
         var mine = LINKS.filter(function (u) { return reach[hostOf(u)] === true; });
         var adsPending = LINKS.some(function (u) { return reach[hostOf(u)] === undefined; });
+        var rl = ROLLER.filter(function (u) { return reach[hostOf(u)] === true; });
         var fb = FALLBACK.filter(function (u) { return reach[hostOf(u)] === true; });
         if (mine.length) pool = mine;
+        else if (!adsPending && rl.length) { pool = rl; via = 'smart:roller'; }
         else if (!adsPending && fb.length) { pool = fb; via = 'smart:hilltop'; }
         else if (reachDone) via = 'smart:noreach';
       }
@@ -175,7 +179,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     // click then only opens links that can actually show. Counters: 20% sample.
     if (window.fetch && window.AbortController) {
       setTimeout(function () {
-        var all = LINKS.concat(FALLBACK).map(hostOf).filter(function (h, k, arr) { return arr.indexOf(h) === k; });
+        var all = LINKS.concat(ROLLER, FALLBACK).map(hostOf).filter(function (h, k, arr) { return arr.indexOf(h) === k; });
         var got = {}, left = all.length, sample = Math.random() < 0.2;
         reach = got;
         all.forEach(function (d) {
@@ -191,6 +195,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               var ads = LINKS.map(hostOf).filter(function (h, k, arr) { return arr.indexOf(h) === k; });
               var ok = ads.filter(function (h) { return got[h]; }).length;
               count(ok === ads.length ? 'reach:all' : ok ? 'reach:some' : 'reach:none');
+              if (!ok && ROLLER.some(function (u) { return got[hostOf(u)]; })) count('reach:roller');
               if (!ok && FALLBACK.some(function (u) { return got[hostOf(u)]; })) count('reach:hilltop');
             });
         });
