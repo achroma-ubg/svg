@@ -1,12 +1,3 @@
-1795653388 portable/assets/music-BmF2fFPV.js
-1795653388 portable/assets/scrollbars-BoNOOVzo.js
-1795653388 portable/assets/settings-CK3aLFT9.js
-1795653388 portable/assets/shop-C-j2zDOj.js
-1795653388 portable/assets/vms-BuAmZG_g.js
-1795653388 portable/assets/webblox-C7PVfL6k.js
-1795654401 assets/account-VwaYm0r4.js
-1795654401 assets/ai-DuV4OP-P.js
-1795654401 assets/chat-DK2_UMgN.js
 1795654401 assets/games-CqWPEFsd.js
 1795654401 assets/linkgen-Jd6RRLtK.js
 1795654401 assets/LiveTV-uEzF9iA6.js
@@ -80,3 +71,5 @@
 1795728084 portable/assets/chat-Dfgs_Kux.js
 1795800977 assets/chat-ubZdqNXJ.js
 1795800977 portable/assets/chat-ubZdqNXJ.js
+1795811961 assets/chat-BUJTP-I8.js
+1795811961 portable/assets/chat-BUJTP-I8.js
