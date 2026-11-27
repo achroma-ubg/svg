@@ -1,5 +1,3 @@
-1795654401 portable/assets/games-CqWPEFsd.js
-1795654401 portable/assets/linkgen-Jd6RRLtK.js
 1795654401 portable/assets/LiveTV-uEzF9iA6.js
 1795654401 portable/assets/main-Bo4Pi55-.js
 1795654401 portable/assets/movies-CVCnHkAE.js
@@ -67,3 +65,5 @@
 1795816225 portable/assets/chat-Ci5nE3vU.css
 1795816225 portable/assets/main-BMsFVulq.css
 1795816225 portable/assets/main-nfyrhfIN.js
+1795819447 assets/main-DA4Z4YWf.js
+1795819447 portable/assets/main-DA4Z4YWf.js
