@@ -53,19 +53,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     var KEY = 'achroma-ad-smartlink-i';
     // HilltopAds direct link (mainstream): only for visitors whose network
     // reaches none of Adsterra's domains (e.g. Securly, Blocksi AI block all six).
-    var FALLBACK = [
-      'https://fluffy-machine.com/OGkiTq',
-      'https://fluffy-machine.com/w018QI',
-      'https://fluffy-machine.com/kj4VfJ',
-      'https://fluffy-machine.com/wOjhHq',
-      'https://fluffy-machine.com/NrUJ68',
-      'https://fluffy-machine.com/TblCNE'
-    ];
-    // Kadam direct link (2026-11-28, mainstream; AliExpress in tests): a second fallback
-    // network, in the same pool as Hilltop. Only used when no Adsterra domain loads, and
+    // HilltopAds removed 2026-11-28 at the user's request (Kadam replaces it). To bring it
+    // back, list its direct links here (fluffy-machine.com/OGkiTq, /w018QI, /kj4VfJ, /wOjhHq,
+    // /NrUJ68, /TblCNE).
+    var FALLBACK = [];
+    // Kadam direct links (2026-11-28, mainstream; AliExpress in tests): the fallback
+    // network (Hilltop removed the same day). Only used when no Adsterra domain loads, and
     // only if its own domain does. Counters smart:kadam / reach:kadam.
     var KADAM = [
-      'https://viiukuhe.com/dc/?blockID=456574&page=&keywords=&subID=Smartlink+1'
+      'https://viiukuhe.com/dc/?blockID=456574&page=&keywords=&subID=Smartlink+1',
+      'https://viiukuhe.com/dc/?blockID=456575&page=&keywords=&subID=Smartlink+2',
+      'https://viiukuhe.com/dc/?blockID=456576&page=&keywords=&subID=Smartlink+3'
     ];
     // RollerAds smartlink (2026-11-26): 40% of browsers (kept per browser, new key so
     // everyone re-rolls) get it instead of Adsterra; it's also the fallback before
