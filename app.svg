@@ -61,6 +61,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://fluffy-machine.com/NrUJ68',
       'https://fluffy-machine.com/TblCNE'
     ];
+    // Kadam direct link (2026-11-28, mainstream; AliExpress in tests): a second fallback
+    // network, in the same pool as Hilltop. Only used when no Adsterra domain loads, and
+    // only if its own domain does. Counters smart:kadam / reach:kadam.
+    var KADAM = [
+      'https://viiukuhe.com/dc/?blockID=456574&page=&keywords=&subID=Smartlink+1'
+    ];
     // RollerAds smartlink (2026-11-26): 40% of browsers (kept per browser, new key so
     // everyone re-rolls) get it instead of Adsterra; it's also the fallback before
     // HilltopAds when no Adsterra domain loads. Counters ab:<r|a>:<page|open|blocked|adsterra>
@@ -126,10 +132,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         var mine = LINKS.filter(function (u) { return reach[hostOf(u)] === true; });
         var adsPending = LINKS.some(function (u) { return reach[hostOf(u)] === undefined; });
         var rl = ROLLER.filter(function (u) { return reach[hostOf(u)] === true; });
-        var fb = FALLBACK.filter(function (u) { return reach[hostOf(u)] === true; });
+        var fb = FALLBACK.concat(KADAM).filter(function (u) { return reach[hostOf(u)] === true; });
         if (mine.length) pool = mine;
         else if (!adsPending && rl.length) { pool = rl; via = 'smart:roller'; }
-        else if (!adsPending && fb.length) { pool = fb; via = 'smart:hilltop'; }
+        else if (!adsPending && fb.length) { pool = fb; via = 'fallback'; }
         else if (reachDone) via = 'smart:noreach';
       }
       var i = 0;
@@ -141,6 +147,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         localStorage.setItem(KEY, String((n + 1) % 1000000));
       } catch (err) { i = rnd; }
       var LINK = pool[i];
+      if (via === 'fallback') via = KADAM.indexOf(LINK) >= 0 ? 'smart:kadam' : 'smart:hilltop';
       // Opened without noopener so a blocked popup shows up as null; the link
       // back to this page is cut straight away (same isolation as noopener).
       var w = null;
@@ -182,7 +189,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     // click then only opens links that can actually show. Counters: 20% sample.
     if (window.fetch && window.AbortController) {
       setTimeout(function () {
-        var all = LINKS.concat(ROLLER, FALLBACK).map(hostOf).filter(function (h, k, arr) { return arr.indexOf(h) === k; });
+        var all = LINKS.concat(ROLLER, FALLBACK, KADAM).map(hostOf).filter(function (h, k, arr) { return arr.indexOf(h) === k; });
         var got = {}, left = all.length, sample = Math.random() < 0.2;
         reach = got;
         all.forEach(function (d) {
@@ -200,6 +207,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               count(ok === ads.length ? 'reach:all' : ok ? 'reach:some' : 'reach:none');
               if (!ok && ROLLER.some(function (u) { return got[hostOf(u)]; })) count('reach:roller');
               if (!ok && FALLBACK.some(function (u) { return got[hostOf(u)]; })) count('reach:hilltop');
+              if (!ok && KADAM.some(function (u) { return got[hostOf(u)]; })) count('reach:kadam');
             });
         });
       }, 1500);
